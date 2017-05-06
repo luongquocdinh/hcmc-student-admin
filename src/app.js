@@ -17,7 +17,7 @@ app.use(session({
 }));
 
 var conf = {
-  port: argv.p || 9000
+  port: process.env.PORT || 9000
 }
 
 app.set('port', conf.port)
