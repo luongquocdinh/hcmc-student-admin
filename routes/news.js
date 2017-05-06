@@ -99,12 +99,12 @@ router.post('/add/news', function (req, res) {
         }
         var imageDir = files.thumbnail.path
         var id = fields._id
-        var data = News({
+        var data = {
             "title": fields.title,
             "thumbnail": imageDir.substring(imageDir.indexOf('/uploads/news/')),
             "brief": fields.brief,
             "content": fields.content,
-        })
+        }
         News.findOne({_id: id}, function (err, news) {
             if (err) console.log(err)
             if (news) {
