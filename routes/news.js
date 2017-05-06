@@ -21,7 +21,6 @@ router.get('/news', function (req, res) {
             }
     
             if (data) {
-                console.log(data)
                 return res.render('pages/news.ejs', {
                     news: data,
                     req: req
@@ -34,17 +33,28 @@ router.get('/news', function (req, res) {
 })
 
 router.get('/news/:id', function (req, res) {
-    News.findOne({_id: req.params.id}, function (err, data) {
-        if (err) {
-            return res.render('pages/index.ejs')
-        }
+    // News.findOne({_id: req.params.id}, function (err, data) {
+    //     if (err) {
+    //         return res.render('pages/index.ejs')
+    //     }
 
-        if (data) {
+    //     if (data) {
+    //         return res.render('pages/topic.ejs', {
+    //             news: data
+    //         })
+    //     }
+    // })
+    News.findOne({_id: req.params.id})
+        .sort({updated_at: -1})
+        .then(data => {
+            console.log(data)
             return res.render('pages/topic.ejs', {
                 news: data
             })
-        }
-    })
+        })
+        .catch(err => {
+            return res.render('pages/index.ejs')
+        })
 })
 
 router.get('/news/topic/add', function (req, res) {
@@ -65,7 +75,6 @@ router.post('/news/topic/add', function (req, res) {
                 if (err) throw err
                 News.findOne({topic: req.body.topic}, function (err, info) {
                     if (err) throw err
-                    console.log('here')
                     if (info) {
                         info_topic = Topic({
                             id_topic: info._id,
@@ -93,11 +102,13 @@ router.post('/add/news', function (req, res) {
     form.multiples = true
     form.keepExtensions = true
     form.uploadDir = path.join(__dirname, './../uploads/news')
+    console.log(form.uploadDir)
     form.parse(req, function (err, fields, files) {
         if (err) {
             console.log('Error is: ' + err)
         }
         var imageDir = files.thumbnail.path
+        console.log(imageDir)
         var id = fields._id
         var data = {
             "title": fields.title,
@@ -110,7 +121,7 @@ router.post('/add/news', function (req, res) {
             if (news) {
                 news.news.push(data)
                 news.save()
-                news.news.sort({updated_at: 1})
+                news.news.sort({updated_at: -1})
                 return res.redirect('./../news/' + id)
             } else {
                 return res.render('pages/index.ejs')
