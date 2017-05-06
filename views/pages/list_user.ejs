@@ -1,0 +1,105 @@
+<% include ../partials/head %>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+
+		<% include ../partials/header %>
+
+		<% include ../partials/aside %>
+
+		<div class="content-wrapper">
+			<% include ../user/list_user %>
+		</div>
+
+		<% include ../partials/footer %>
+
+
+		<div class="control-sidebar-bg"></div>
+	</div>
+<script>
+	$("#example1").DataTable()
+    $(".add_user").click(function () {
+        $('#modal_add_user').modal('show');
+        return false;
+    })
+
+	$('.block_user').click(function () {
+		var id = $(this).attr("data-id")
+		var is_block = $(this).attr("data-block")
+		$.ajax({
+			type: "POST",
+			data: {
+				"id": id,
+				"is_block": is_block
+			},
+			url: "/" + id + "/update-status",
+			success: function (data) {
+				if (data.success === true) {
+					location.reload();
+				}
+			}
+		})
+	})
+
+	$('.delete_user').click(function () {
+		var id = $(this).attr("data-id")
+		if (confirm("Bạn có chắc chắn xóa thành viên này?")) {
+			$.ajax({
+				type: "POST",
+				data: {
+					"id": id
+				},
+				url: "/" + id + "/delete-user",
+				success: function (data) {
+					if (data.success === 1) {
+						location.reload();
+					}
+				}
+			})
+		} else {
+			return false
+		}
+	})
+
+	$('.topic').click(function () {
+		var id = $(this).attr("data-id")
+		var list_topic = $(this).attr("data-topic")
+		$("#user_id").val(id)
+		var topic = JSON.parse(list_topic)
+		for (var i = 0; i < topic.length; i++) {
+			<% user.forEach(function (data) { %>
+				<% data.list_topic.forEach(function (item) { %>
+					var label = $('#' + topic[i].id).next().text().trim()
+					if (item.name === label) {
+						$('#' + topic[i].id).prop('checked', true)
+					}
+				<% }) %>
+			<% }) %>
+		}
+		$('#modal_list_topic').modal('show');
+	})
+
+	var test1
+	$(".edit_role").click(function () {
+		var id = $(this).attr("data-id")
+		var is_write = $(this).attr("data-write")
+		var is_accept = $(this).attr("data-accept")
+		$("#edit_id").val(id)
+		
+		if (is_write === 'true') {
+			$("#is_write").prop('checked', true)
+		} else {
+			$("#is_write").prop('checked', false)
+		}
+
+		if (is_accept === 'true') {
+			$("#is_accept").prop('checked', true)
+		} else {
+			$("#is_accept").prop('checked', false)
+		}
+
+        $('#modal_edit_role').modal('show');
+        return false;
+    });
+</script>
+<% include ../partials/tail %>
