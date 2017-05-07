@@ -1,11 +1,11 @@
 <section class="content-header">
     <h1>
-        Tin Tức
+        Hoạt động
         <small>HCMC-STUDENTS</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tin Tức</a></li>
+        <li><a href="#">Hoạt động</a></li>
     </ol>
 </section>
 
@@ -29,7 +29,7 @@
                             <% for (var i = 0; i < news.news.length; i++) { %>
                                 <tr>
                                     <td>
-                                        <strong><a href="/news/<%= news._id %>/<%= news.news[i]._id %>"><%= news.news[i].title %></a></strong>
+                                        <strong><a href="/activity/<%= news._id %>/<%= news.news[i]._id %>"><%= news.news[i].title %></a></strong>
                                     </td>
                                 </tr>
                             <% } %>
@@ -53,7 +53,7 @@
             <div class="modal-body" id="modalBody" style="height:auto;min-height: 100%">
                 <div class="row">
                     <div class="col-xs-12">
-                        <form method="POST" action="/add/news" enctype="multipart/form-data">
+                        <form method="POST" action="/activity/add/news" enctype="multipart/form-data">
                             <div class="box">
                                 <div class="box-body">
                                     <div class="form-group">

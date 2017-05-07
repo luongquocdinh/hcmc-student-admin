@@ -8,6 +8,8 @@ var app = express()
 var cors = require('cors')
 var routes = require('./../routes/index')
 var news = require('./../routes/news')
+var activity = require('./../routes/activity')
+var gift = require('./../routes/gift')
 let path = require('path')
 
 app.use(session({
@@ -37,5 +39,6 @@ app.use(express.static('public'))
 
 app.use('/', routes)
 app.use('/', news)
-
+app.use('/', activity)
+app.use('/', gift)
 module.exports = app

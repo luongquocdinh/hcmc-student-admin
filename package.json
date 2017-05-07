@@ -7,7 +7,7 @@
     "demo_be": "index.js"
   },
   "scripts": {
-    "admin": "node bin/index.js"
+    "admin": "nodemon bin/index.js"
   },
   "author": "",
   "license": "ISC",
