@@ -17,11 +17,11 @@ router.get('/news', function (req, res) {
     if (sess.email) {
         News.find({}, function (err, data) {
             if (err) {
-                return res.render('pages/index.ejs')
+                return res.render('pages_news/index.ejs')
             }
     
             if (data) {
-                return res.render('pages/news.ejs', {
+                return res.render('pages_news/news.ejs', {
                     news: data,
                     req: req
                 })
@@ -36,17 +36,13 @@ router.get('/news/:id', function (req, res) {
     News.findOne({_id: req.params.id})
         .sort({updated_at: -1})
         .then(data => {
-            return res.render('pages/topic.ejs', {
+            return res.render('pages_news/topic.ejs', {
                 news: data
             })
         })
         .catch(err => {
-            return res.render('pages/index.ejs')
+            return res.render('pages_news/index.ejs')
         })
-})
-
-router.get('/news/topic/add', function (req, res) {
-    res.render('pages/add_topic.ejs')
 })
 
 router.post('/news/topic/add', function (req, res) {
@@ -80,10 +76,6 @@ router.post('/news/topic/add', function (req, res) {
     })
 })
 
-router.get('/news/add/news', function (req, res) {
-    res.render('pages/add_news.ejs')
-})
-
 router.post('/add/news', function (req, res) {
     var form = new formidable.IncomingForm()
 
@@ -112,7 +104,7 @@ router.post('/add/news', function (req, res) {
                 news.news.sort({updated_at: -1})
                 return res.redirect('./../news/' + id)
             } else {
-                return res.render('pages/index.ejs')
+                return res.render('pages_news/index.ejs')
             }
         })
     })
@@ -124,7 +116,7 @@ router.get('/news/:id/:id_news', function (req, res) {
         if (news) {
             for (var i = 0; i < news.news.length; i++) {
                 if (news.news[i].id === req.params.id_news) {
-                    return res.render('pages/news_detail.ejs', {
+                    return res.render('pages_news/news_detail.ejs', {
                         news: news.news[i]
                     })
                 }

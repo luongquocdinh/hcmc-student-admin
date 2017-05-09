@@ -9,7 +9,7 @@ var boot = function () {
   })
   // mongodb://heroku_ncdhz4rn:j51dpjdmpitu8v7onnt61uhi56@ds133281.mlab.com:33281/heroku_ncdhz4rn
   // mongodb://localhost:27017/demo_be
-  mongoose.connect('mongodb://heroku_ncdhz4rn:j51dpjdmpitu8v7onnt61uhi56@ds133281.mlab.com:33281/heroku_ncdhz4rn', function (err, result) {
+  mongoose.connect('mongodb://localhost:27017/demo_be', function (err, result) {
     if (err) return console.log(err)
     console.log('Connect database successful')
   })

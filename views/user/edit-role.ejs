@@ -1,0 +1,94 @@
+<section class="content-header">
+    <h1>
+        <%= user.name %>
+        <small><%= user.school %></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Tin Tức</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Thông tin thành viên <strong><%= user.name %></strong></h3>
+                </div>
+
+                <div class="box-body">
+                    <h3>Phân quyền chuyên mục bài viết</h3>
+                    <form action="/<%=user.id%>/update-topic" method="POST">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h4>Tin Tức</h4>
+                                <div class="row">
+                                    <% topic.forEach(function (data) { %>
+                                        <% if (data.name_source === 'Tin Tức' ) { %>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>
+                                                        <input id="<%= data.id_topic %>" name="<%= data.id_topic %>" type="checkbox">
+                                                        <%= data.name_topic %>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        <% } %>            
+                                    <% }) %>    
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h4>Hoạt động</h4>
+                                <div class="row">
+                                    <% topic.forEach(function (data) { %>
+                                        <% if (data.name_source === 'Hoạt động' ) { %>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>
+                                                        <input id="<%= data.id_topic %>" name="<%= data.id_topic %>" type="checkbox">
+                                                        <%= data.name_topic %>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        <% } %>            
+                                    <% }) %>    
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h4>Quà tặng</h4>
+                                <div class="row">
+                                    <% topic.forEach(function (data) { %>
+                                        <% if (data.name_source === 'Quà tặng' ) { %>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>
+                                                        <input id="<%= data.id_topic %>" name="<%= data.id_topic %>" type="checkbox">
+                                                        <%= data.name_topic %>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        <% } %>            
+                                    <% }) %>    
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Xác nhận" class="btn btn-primary" style="float: right;"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>    

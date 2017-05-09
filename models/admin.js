@@ -14,7 +14,9 @@ var admin = new Schema({
   "code_school": String,
   "created_at": { type: Date },
   "updated_at": { type: Date }
-})
+},
+{ versionKey: false }
+)
 
 var Admin = mongoose.model('admin', admin)
 

@@ -149,11 +149,7 @@
                                                     >Xóa tài khoản</button>
                                         </td>
                                         <td>
-                                            <button type="button"
-                                                    class="btn btn-info topic"
-                                                    data-id=<%= data._id %>
-                                                    data-topic='<%- JSON.stringify(data.list_topic) %>'
-                                                    >Chủ đề</button>
+                                            <a href="<%= data._id %>/update-topic/" target="_blank">Phân quyền...</a>
                                         </td>
                                     <% } %>
                                 </tr>
@@ -307,48 +303,3 @@
     </div>
 </div>
 <!--End Edit Role-->
-
-<!--List Topic-->
-<div class="modal" id="modal_list_topic">
-    <div class="modal-dialog" style="width: 60%;height: 50%">
-        <div class="modal-content" >
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Phân quyền cho từng chủ đề </h4>
-            </div>
-
-            <div class="modal-body" id="modalBody">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <form action="/:id/update-role" method="POST">
-                            <div class="form-group">
-                                <input id="user_id" type="hidden" name="id" class="form-control">
-                            </div>
-                            <h3>Tin Tức</h3>
-                            <div class="row">
-                                <% topic.forEach(function (data) { %>
-                                    <% if (data.name_source === 'Tin Tức' ) { %>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <input id="<%= data.id_topic %>" name="<%= data.id_topic %>" type="checkbox">
-                                                <label>
-                                                    <%= data.name_topic %>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    <% } %>            
-                                <% }) %>    
-                            </div>
-                            <hr>
-                            <div class="form-group">
-                                <input type="submit" value="Xác nhận" class="btn btn-primary" style="float: right;"/>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--End List Topic-->

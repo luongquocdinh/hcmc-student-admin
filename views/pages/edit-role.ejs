@@ -1,0 +1,27 @@
+<% include ../partials/head %>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+
+		<% include ../partials/header %>
+
+		<% include ../partials/aside %>
+
+		<div class="content-wrapper">
+			<% include ../user/edit-role %>
+		</div>
+
+		<% include ../partials/footer %>
+
+
+		<div class="control-sidebar-bg"></div>
+	</div>
+
+    <script>
+        var row =<%-JSON.stringify(user.list_topic)%>;
+        for (var i = 0; i < row.length; i++) {
+            $("#" + row[i]).prop('checked', true)
+            $("#" + row[i]).parent().css('color','red');
+        }
+    </script>
+<% include ../partials/tail %>

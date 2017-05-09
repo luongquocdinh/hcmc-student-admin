@@ -264,4 +264,45 @@ router.post('/:id/delete-user', function (req, res) {
     })
 })
 
+router.get('/:id/update-topic', function (req, res) {
+    var id = req.params.id
+    Admin.findOne({_id: id}, function (err, user) {
+        if (err)  {
+            return console.log(err)
+        }
+        Topic.find({}, function (err, topic) {
+            if (err) {
+                console.log(err)
+            }
+            if (topic) {
+                return res.render('pages/edit-role', {
+                    user: user,
+                    req: req,
+                    topic: topic
+                })
+            }
+        })
+    })
+})
+
+router.post('/:id/update-topic', function (req, res) {
+    var id = req.params.id
+    var topic = []
+    for (key in req.body) {
+        topic.push(key)
+    }
+    Admin.findOne({_id: id}, function (err, user) {
+        if (err) {
+            console.log(err)
+        }
+        user.list_topic = topic
+        user.save(function (err) {
+            if (err) {
+                return console.log(err)
+            }
+            return res.redirect('/' +id + '/update-topic')
+        })
+    })
+})
+
 module.exports = router

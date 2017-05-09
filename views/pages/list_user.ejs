@@ -64,17 +64,10 @@
 	$('.topic').click(function () {
 		var id = $(this).attr("data-id")
 		var list_topic = $(this).attr("data-topic")
+		var topic =  list_topic.split(",")
 		$("#user_id").val(id)
-		var topic = JSON.parse(list_topic)
 		for (var i = 0; i < topic.length; i++) {
-			<% user.forEach(function (data) { %>
-				<% data.list_topic.forEach(function (item) { %>
-					var label = $('#' + topic[i].id).next().text().trim()
-					if (item.name === label) {
-						$('#' + topic[i].id).prop('checked', true)
-					}
-				<% }) %>
-			<% }) %>
+			$("#" + topic[i]).prop('checked', true)
 		}
 		$('#modal_list_topic').modal('show');
 	})

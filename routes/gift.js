@@ -62,7 +62,7 @@ router.post('/gift/topic/add', function (req, res) {
                     if (info) {
                         info_topic = Topic({
                             id_topic: info._id,
-                            name_source: 'Hoạt động',
+                            name_source: 'Quà tặng',
                             name_topic: info.topic
                         })
                         info_topic.save()
