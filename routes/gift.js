@@ -33,11 +33,17 @@ router.get('/gift', function (req, res) {
 })
 
 router.get('/gift/:id', function (req, res) {
+    let news = []
     Gift.findOne({_id: req.params.id})
         .sort({updated_at: -1})
         .then(data => {
+            var i = data.news.length - 1
+            for (i; i >= 0; i--){
+                news.push(data.news[i])
+            }
             return res.render('pages_gift/topic.ejs', {
-                news: data
+                data: data,
+                news: news
             })
         })
         .catch(err => {

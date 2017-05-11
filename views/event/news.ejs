@@ -1,11 +1,11 @@
 <section class="content-header">
     <h1>
-        Quà tặng
+        Sự kiện
         <small>HCMC-STUDENTS</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Quà tặng</a></li>
+        <li><a href="#">Tin Tức</a></li>
     </ol>
 </section>
 
@@ -14,22 +14,22 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title"><%= data.topic %></h3>
-                    <a class="btn btn-primary pull-right add_news">Thêm Tin Tức</a>
+                    <h3 class="box-title">Sự Kiện</h3>
+                    <a class="btn btn-primary pull-right add_news">Thêm Sự kiện</a>
                 </div>
 
                 <div class="box-body">
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Các Tin Tức</th>
+                                <th>Các Sự Kiện</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% for (var i = 0; i < news.length; i++) { %>
                                 <tr>
                                     <td>
-                                        <strong><a href="/gift/<%= data._id %>/<%= news[i]._id %>"><%= news[i].title %></a></strong>
+                                        <strong><a href="/event/<%= news[i]._id %>"><%= news[i].title %></a></strong>
                                     </td>
                                 </tr>
                             <% } %>
@@ -53,13 +53,9 @@
             <div class="modal-body" id="modalBody" style="height:auto;min-height: 100%">
                 <div class="row">
                     <div class="col-xs-12">
-                        <form method="POST" action="/gift/add/news" enctype="multipart/form-data">
+                        <form method="POST" action="/event/add" enctype="multipart/form-data">
                             <div class="box">
                                 <div class="box-body">
-                                    <div class="form-group">
-                                        <input type="hidden" name="_id" class="form-control" value="<%= news._id %>">
-                                    </div>
-
                                     <div class="form-group">
                                         <label>Tiêu đề</label>
                                         <input type="text" name="title" class="form-control">

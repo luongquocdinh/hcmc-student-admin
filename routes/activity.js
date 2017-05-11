@@ -33,11 +33,17 @@ router.get('/activity', function (req, res) {
 })
 
 router.get('/activity/:id', function (req, res) {
+    let news = []
     Activity.findOne({_id: req.params.id})
         .sort({updated_at: -1})
         .then(data => {
+            var i = data.news.length - 1
+            for (i; i >= 0; i--){
+                news.push(data.news[i])
+            }
             return res.render('pages_activity/topic.ejs', {
-                news: data
+                data: data,
+                news: news
             })
         })
         .catch(err => {
