@@ -79,6 +79,7 @@
                                 <% if (req.session.position == 'member') { %>
                                 <th>Quyền viết bài</th>
                                 <th>Quyền được đăng bài ngay</th>
+                                <th>Các chuyên mục được phép truy cập</th>
                                 <% } %>
                             </tr>
                         </thead>
@@ -173,18 +174,27 @@
 
                                     <td>
                                         <% if (data.is_write == true) { %>
-                                            <span class="label label-info">Được viết bài</span>
+                                            <span class="label label-success">Được viết bài</span>
                                         <% } else {%>
-                                            <span class="label label-default">Không được viết bài</span>
+                                            <span class="label label-danger">Không được viết bài</span>
                                         <% } %>
                                     </td>
 
                                     <td>
                                         <% if (data.is_accept == true) { %>
-                                        <span class="label label-info">Được đăng bài ngay</span>
+                                        <span class="label label-success">Được đăng bài ngay</span>
                                         <% } else {%>
-                                            <span class="label label-default">Không được đăng bài ngay</span>
+                                            <span class="label label-danger">Không được đăng bài ngay</span>
                                         <% } %>
+                                    </td>
+                                    <td>
+                                        <% topic.forEach(function (data) { %>
+                                            <% for (var i = 0; i < req.session.topic.length; i++) { %>
+                                                <% if (data.id_topic == req.session.topic[i]) { %>
+                                                    <span class="label label-success"><%=data.name_topic%></span>
+                                                <% } %>
+                                            <% } %>
+                                        <%})%>
                                     </td>
                                 </tr>
                                 <% } %>

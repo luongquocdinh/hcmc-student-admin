@@ -58,8 +58,9 @@ router.post('/login', function (req, res) {
                 }
                 sess.token = data.token
                 sess.position = user.position
+                sess.topic = user.list_topic
                 console.log(req.session)
-                return res.redirect('/news')
+                return res.redirect('/list_user')
             })
         }
     })
@@ -83,7 +84,7 @@ router.get('/list_user', function (req, res) {
         }
 
         if (data) {
-            // console.log(req.session)
+            console.log(req.session)
             Topic.find({}, function (err, topic) {
                 if (err) {
                     console.log(err)

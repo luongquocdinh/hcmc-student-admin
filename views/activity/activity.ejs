@@ -29,11 +29,23 @@
                         </thead>
                         <tbody>
                             <% activity.forEach(function (data) { %>
-                                <tr>
-                                    <td>
-                                        <strong><a href="/activity/<%= data.id %>"><%= data.topic %></strong></a>
-                                    </td>
-                                </tr>
+                                <% if (req.session.position === 'member') { %>
+                                    <% for (var i = 0; i < req.session.topic.length; i++) { %>
+                                        <% if (data.id == req.session.topic[i]) { %>
+                                            <tr>
+                                                <td>
+                                                    <strong><a href="activity/<%= data.id %>"><%= data.topic %></strong></a>
+                                                </td>
+                                            </tr>
+                                        <% } %>
+                                    <% } %>    
+                                 <% } else if (req.session.position === 'manager') { %>
+                                        <tr>
+                                            <td>
+                                                <strong><a href="activity/<%= data.id %>"><%= data.topic %></strong></a>
+                                            </td>
+                                        </tr>
+                                    <% } %>
                             <% }) %>
                         </tbody>
                     </table>
