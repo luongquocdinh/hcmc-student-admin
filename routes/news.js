@@ -149,6 +149,8 @@ router.get('/news/:topic_ascii/:id', function (req, res) {
 
 router.post('/update/:topic_ascii/:id', function (req, res) {
     var form = new formidable.IncomingForm()
+    let thumbnail = ''
+    let dirImage = ''
 
     form.multiples = true
     form.keepExtensions = true
@@ -157,7 +159,6 @@ router.post('/update/:topic_ascii/:id', function (req, res) {
         if (err) {
             console.log('Error is: ' + err)
         }
-        var imageDir = files.thumbnail.path
         var topic_ascii = req.params.topic_ascii
         var id = req.params.id
         News.findOne({topic_ascii: topic_ascii}, function (err, news) {
@@ -165,9 +166,8 @@ router.post('/update/:topic_ascii/:id', function (req, res) {
             if (news) {
                 for (var i = 0; i < news.news.length; i++) {
                     if (news.news[i].id === req.params.id) {
-                        let thumbnail = ''
-                        let dirImage = path.join(__dirname, './../' + news.news[i].thumbnail)
-                        if (files.thumbnail) {
+                        dirImage = path.join(__dirname, './../' + news.news[i].thumbnail)
+                        if (files.thumbnail.size != 0) {
                             thumbnail = files.thumbnail.path
                             fs.unlinkSync(dirImage)
                         } else {
