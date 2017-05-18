@@ -138,11 +138,69 @@ router.get('/news/:topic_ascii/:id', function (req, res) {
             for (var i = 0; i < news.news.length; i++) {
                 if (news.news[i].id === req.params.id) {
                     return res.render('pages_news/news_detail.ejs', {
+                        topic: news,
                         news: news.news[i]
                     })
                 }
             }
         }
+    })
+})
+
+router.post('/update/:topic_ascii/:id', function (req, res) {
+    var form = new formidable.IncomingForm()
+
+    form.multiples = true
+    form.keepExtensions = true
+    form.uploadDir = path.join(__dirname, './../uploads/news')
+    form.parse(req, function (err, fields, files) {
+        if (err) {
+            console.log('Error is: ' + err)
+        }
+        var imageDir = files.thumbnail.path
+        var topic_ascii = req.params.topic_ascii
+        var id = req.params.id
+        News.findOne({topic_ascii: topic_ascii}, function (err, news) {
+            if (err) console.log(err)
+            if (news) {
+                for (var i = 0; i < news.news.length; i++) {
+                    if (news.news[i].id === req.params.id) {
+                        let thumbnail = ''
+                        let dirImage = path.join(__dirname, './../' + news.news[i].thumbnail)
+                        if (files.thumbnail) {
+                            thumbnail = files.thumbnail.path
+                            fs.unlinkSync(dirImage)
+                        } else {
+                            thumbnail = dirImage
+                        }
+                        if (fields.is_accept == 'on') {
+                            fields.is_accept = true
+                        } else {
+                            fields.is_accept = false
+                        }
+                         var data = {
+                            "title": fields.title,
+                            "thumbnail": thumbnail.substring(thumbnail.indexOf('/uploads/')),
+                            "brief": fields.brief,
+                            "is_accept": fields.is_accept,
+                            "content": fields.content,
+                        }
+                        news.news[i].title = data.title
+                        news.news[i].thumbnail = data.thumbnail
+                        news.news[i].brief = data.brief
+                        news.news[i].is_accept = data.is_accept
+                        news.news[i].content = data.content
+                        news.save()
+                        return res.redirect('./../../news/' + topic_ascii)
+                    }
+                }
+            } else {
+                if (files.thumbnail) {
+                    fs.unlink(files.thumbnail.path)
+                }
+                return res.render('pages_news/index.ejs')
+            }
+        })
     })
 })
 module.exports = router
