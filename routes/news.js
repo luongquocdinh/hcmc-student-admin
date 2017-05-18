@@ -12,6 +12,19 @@ var Topic = require('./../models/topic')
 
 var sess;
 
+function convertToASCII(str) {
+    str = str.toLowerCase();
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+    str = str.replace(/ /g, "-");
+    return str;
+}
+
 router.get('/news', function (req, res) {
     sess = req.session
     if (sess.email) {
@@ -32,9 +45,9 @@ router.get('/news', function (req, res) {
     }
 })
 
-router.get('/news/:id', function (req, res) {
+router.get('/news/:topic_ascii', function (req, res) {
     let news = []
-    News.findOne({_id: req.params.id})
+    News.findOne({topic_ascii: req.params.topic_ascii})
         .sort({updated_at: -1})
         .then(data => {
             var i = data.news.length - 1
@@ -52,8 +65,11 @@ router.get('/news/:id', function (req, res) {
 })
 
 router.post('/news/topic/add', function (req, res) {
+    let topic = req.body.topic
+    let topic_ascii = convertToASCII(topic)
     var data = News({
-        topic: req.body.topic,
+        topic: topic,
+        topic_ascii: topic_ascii,
         is_enable: true,
         news: []
     })
@@ -69,7 +85,7 @@ router.post('/news/topic/add', function (req, res) {
                         info_topic = Topic({
                             id_topic: info._id,
                             name_source: 'Tin Tức',
-                            name_topic: info.topic
+                            name_topic: info.topic,
                         })
                         info_topic.save()
                         return res.redirect('/news')
@@ -88,27 +104,26 @@ router.post('/add/news', function (req, res) {
     form.multiples = true
     form.keepExtensions = true
     form.uploadDir = path.join(__dirname, './../uploads/news')
-    console.log(form.uploadDir)
     form.parse(req, function (err, fields, files) {
         if (err) {
             console.log('Error is: ' + err)
         }
         var imageDir = files.thumbnail.path
-        console.log(imageDir)
-        var id = fields._id
+        var topic_ascii = fields.topic_ascii
         var data = {
             "title": fields.title,
             "thumbnail": imageDir.substring(imageDir.indexOf('/uploads/news/')),
             "brief": fields.brief,
+            "is_accept": sess.is_accept,
             "content": fields.content,
         }
-        News.findOne({_id: id}, function (err, news) {
+        News.findOne({topic_ascii: topic_ascii}, function (err, news) {
             if (err) console.log(err)
             if (news) {
                 news.news.push(data)
                 news.save()
                 news.news.sort({updated_at: -1})
-                return res.redirect('./../news/' + id)
+                return res.redirect('./../news/' + topic_ascii)
             } else {
                 return res.render('pages_news/index.ejs')
             }
@@ -116,12 +131,12 @@ router.post('/add/news', function (req, res) {
     })
 })
 
-router.get('/news/:id/:id_news', function (req, res) {
-    News.findOne({_id: req.params.id}, function (err, news) {
+router.get('/news/:topic_ascii/:id', function (req, res) {
+    News.findOne({topic_ascii: req.params.topic_ascii}, function (err, news) {
         if (err) return console.log(err)
         if (news) {
             for (var i = 0; i < news.news.length; i++) {
-                if (news.news[i].id === req.params.id_news) {
+                if (news.news[i].id === req.params.id) {
                     return res.render('pages_news/news_detail.ejs', {
                         news: news.news[i]
                     })

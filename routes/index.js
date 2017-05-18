@@ -59,6 +59,7 @@ router.post('/login', function (req, res) {
                 sess.token = data.token
                 sess.position = user.position
                 sess.topic = user.list_topic
+                sess.is_accept = user.is_accept
                 console.log(req.session)
                 return res.redirect('/list_user')
             })

@@ -4,6 +4,7 @@ mongoose.Promise = require('bluebird');
 
 var news = new Schema({
     topic: {type: String},
+    topic_ascii: {type: String},
     is_enable: {type: Boolean},
     news: [{
         title: {type: String},

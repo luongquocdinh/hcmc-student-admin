@@ -18,24 +18,125 @@
                     <a class="btn btn-primary pull-right add_news">Thêm Tin Tức</a>
                 </div>
 
-                <div class="box-body">
+                 <div id="exTab2" class="container">	
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#1" data-toggle="tab">Tất cả</a>
+                        </li>
+                        <li>
+                            <a href="#2" data-toggle="tab">Chờ duyệt</a>
+                        </li>
+                        <li>
+                            <a href="#3" data-toggle="tab">Đã duyệt</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content ">
+                        <div class="tab-pane active" id="1">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Các Tin Tức</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (var i = 0; i < news.length; i++) { %>
+                                        <tr>
+                                            <td>
+                                                <strong><a href="/news/<%= data.topic_ascii %>/<%= news[i]._id %>"><%= news[i].title %></a></strong>
+                                            </td>
+                                            <td>
+                                                <%if (news[i].is_accept == true) {%>
+                                                    <span class="label label-success">Đã phê duyệt</span>
+                                                <%} else {%>
+                                                    <span class="label label-danger">Chưa phê duyệt</span>
+                                                <% } %>
+                                            </td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane" id="2">
+                             <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Các Tin Tức</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (var i = 0; i < news.length; i++) { %>
+                                        <% if (news[i].is_accept == false) { %>
+                                            <tr>
+                                                <td>
+                                                    <strong><a href="/news/<%= data.topic_ascii %>/<%= news[i]._id %>"><%= news[i].title %></a></strong>
+                                                </td>
+                                                <td>
+                                                    <span class="label label-danger">Chưa phê duyệt</span>
+                                                </td>
+                                            </tr>
+                                        <% } %>    
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane" id="3">
+                             <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Các Tin Tức</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (var i = 0; i < news.length; i++) { %>
+                                        <% if (news[i].is_accept == true) { %>
+                                            <tr>
+                                                <td>
+                                                    <strong><a href="/news/<%= data.topic_ascii %>/<%= news[i]._id %>"><%= news[i].title %></a></strong>
+                                                </td>
+                                                <td>
+                                                    <span class="label label-success">Đã phê duyệt</span>
+                                                </td>
+                                            </tr>
+                                        <% } %>    
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>    
+                 </div>   
+
+                <!--<div class="box-body">
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>Các Tin Tức</th>
+                                <th>Trạng thái</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% for (var i = 0; i < news.length; i++) { %>
                                 <tr>
                                     <td>
-                                        <strong><a href="/news/<%= data._id %>/<%= news[i]._id %>"><%= news[i].title %></a></strong>
+                                        <strong><a href="/news/<%= data.topic_ascii %>/<%= news[i]._id %>"><%= news[i].title %></a></strong>
+                                    </td>
+                                    <td>
+                                        <%if (news[i].is_accept == true) {%>
+                                            <span class="label label-success">Đã phê duyệt</span>
+                                        <%} else {%>
+                                            <span class="label label-danger">Chưa phê duyệt</span>
+                                        <% } %>
                                     </td>
                                 </tr>
                             <% } %>
                         </tbody>
                     </table>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>            
@@ -57,7 +158,7 @@
                             <div class="box">
                                 <div class="box-body">
                                     <div class="form-group">
-                                        <input type="hidden" name="_id" class="form-control" value="<%= data._id %>">
+                                        <input type="hidden" name="topic_ascii" class="form-control" value="<%= data.topic_ascii %>">
                                     </div>
 
                                     <div class="form-group">
