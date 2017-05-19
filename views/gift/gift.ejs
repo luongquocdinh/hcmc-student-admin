@@ -34,7 +34,7 @@
                                         <% if (data.id == req.session.topic[i]) { %>
                                             <tr>
                                                 <td>
-                                                    <strong><a href="gift/<%= data.id %>"><%= data.topic %></strong></a>
+                                                    <strong><a href="gift/<%= data.topic_ascii %>"><%= data.topic %></strong></a>
                                                 </td>
                                             </tr>
                                         <% } %>
@@ -42,7 +42,7 @@
                                  <% } else if (req.session.position === 'manager') { %>
                                         <tr>
                                             <td>
-                                                <strong><a href="gift/<%= data.id %>"><%= data.topic %></strong></a>
+                                                <strong><a href="gift/<%= data.topic_ascii %>"><%= data.topic %></strong></a>
                                             </td>
                                         </tr>
                                     <% } %>
