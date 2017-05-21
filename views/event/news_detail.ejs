@@ -32,6 +32,14 @@
           <!-- /.box-header -->
           <div class="box-body pad">
             <form action="/news" method="POST">
+                  <div class="form-group" style="width: 30%;">
+                    <%if (news.is_accept == true) {%>
+                        <h4><span class="label label-success">Bài đã kiểm duyệt</span></h4>
+                    <%} else {%>
+                        <h4><span class="label label-danger">Bài chưa kiểm duyệt</span></h4>
+                    <%}%>
+                  </div>
+
                   <div class="form-group">
                     <label>Tiêu đề</label>
                     <input type="text" name="title" value="<%= news.title %>" class="form-control">
@@ -43,9 +51,9 @@
                   </div>
 
                   <div class="form-group">
-                    <label>Hình Thumbnail</label>
-                    <input type="file" name="thumbnail" id="exampleInputFile"> <br />
-                    <img src="<%= news.thumbnail %>" width="300" height="200" />
+                    <label for="exampleInputFile">Hình Thumbnail</label>
+                    <input type='file' id="thumbnail" name="thumbnail"/>
+                    <img id="blah" src="<%=news.thumbnail%>" height="100px;" width="100px;" />
                   </div>
 
                   <div class="form-group">
@@ -53,6 +61,17 @@
                     <textarea id="editor1" name="content" rows="10" cols="80" class="form-control">
                         <%= news.content %>
                     </textarea>
+                  </div>
+
+                   <div class="form-group">
+                      <h4>
+                        <strong>Xác nhận đăng bài</strong>
+                        <%if (news.is_accept == true) { %>
+                          <input type="checkbox" name="is_accept" checked style="margin-left: 10px;">
+                        <% } else { %>
+                          <input type="checkbox" name="is_accept" style="margin-left: 10px;">                        
+                        <% } %>
+                      </h4>
                   </div>
 
                   <div class="form-group">

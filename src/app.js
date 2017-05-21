@@ -11,6 +11,7 @@ var news = require('./../routes/news')
 var activity = require('./../routes/activity')
 var gift = require('./../routes/gift')
 var event = require('./../routes/event')
+var feedback = require('./../routes/feedback')
 let path = require('path')
 
 app.use(session({
@@ -43,5 +44,6 @@ app.use('/', news)
 app.use('/', activity)
 app.use('/', gift)
 app.use('/', event)
+app.use('/', feedback)
 
 module.exports = app
