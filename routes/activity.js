@@ -10,6 +10,13 @@ var Login = require('./../models/login')
 var Activity = require('./../models/activity')
 var Topic = require('./../models/topic')
 
+var cloudinary = require('cloudinary')
+cloudinary.config({ 
+  cloud_name: 'hwjtqthls', 
+  api_key: '174213315926813', 
+  api_secret: 'QgfzJyPCJBSjdkWqPTuBWeSc3D4' 
+});
+
 var sess;
 
 function convertToASCII(str) {
@@ -110,24 +117,28 @@ router.post('/activity/add/news', function (req, res) {
         }
         var imageDir = files.thumbnail.path
         var topic_ascii = fields.topic_ascii
-        var id = fields._id
-        var data = {
-            "title": fields.title,
-            "thumbnail": imageDir.substring(imageDir.indexOf('/uploads/activity/')),
-            "brief": fields.brief,
-            "is_accept": sess.is_accept,
-            "content": fields.content,
-        }
-        Activity.findOne({topic_ascii: topic_ascii}, function (err, news) {
-            if (err) console.log(err)
-            if (news) {
-                news.news.push(data)
-                news.save()
-                news.news.sort({updated_at: -1})
-                return res.redirect('./../../activity/' + topic_ascii)
-            } else {
-                return res.render('pages_activity/index.ejs')
+        var images = ''
+        cloudinary.uploader.upload(imageDir, function(result) {
+            console.log(result.url)
+            images = result.url
+            var data = {
+                "title": fields.title,
+                "thumbnail": images,
+                "brief": fields.brief,
+                "is_accept": sess.is_accept,
+                "content": fields.content,
             }
+            Activity.findOne({topic_ascii: topic_ascii}, function (err, news) {
+                if (err) console.log(err)
+                if (news) {
+                    news.news.push(data)
+                    news.save()
+                    news.news.sort({updated_at: -1})
+                    return res.redirect('./../../activity/' + topic_ascii)
+                } else {
+                    return res.render('pages_activity/index.ejs')
+                }
+            })
         })
     })
 })

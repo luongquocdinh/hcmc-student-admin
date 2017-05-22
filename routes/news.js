@@ -10,6 +10,14 @@ var Login = require('./../models/login')
 var News = require('./../models/news')
 var Topic = require('./../models/topic')
 
+var cloudinary = require('cloudinary')
+cloudinary.config({ 
+  cloud_name: 'hwjtqthls', 
+  api_key: '174213315926813', 
+  api_secret: 'QgfzJyPCJBSjdkWqPTuBWeSc3D4' 
+});
+
+
 var sess;
 
 function convertToASCII(str) {
@@ -103,31 +111,36 @@ router.post('/add/news', function (req, res) {
 
     form.multiples = true
     form.keepExtensions = true
-    form.uploadDir = path.join(__dirname, './../uploads/news')
+    form.uploadDir = path.join(__dirname + './../uploads/news')
     form.parse(req, function (err, fields, files) {
         if (err) {
             console.log('Error is: ' + err)
         }
         var imageDir = files.thumbnail.path
         var topic_ascii = fields.topic_ascii
-        var data = {
-            "title": fields.title,
-            "thumbnail": imageDir.substring(imageDir.indexOf('/uploads/news/')),
-            "brief": fields.brief,
-            "is_accept": sess.is_accept,
-            "content": fields.content,
-        }
-        News.findOne({topic_ascii: topic_ascii}, function (err, news) {
-            if (err) console.log(err)
-            if (news) {
-                news.news.push(data)
-                news.save()
-                news.news.sort({updated_at: -1})
-                return res.redirect('./../news/' + topic_ascii)
-            } else {
-                return res.render('pages_news/index.ejs')
+        var images = ''
+        cloudinary.uploader.upload(imageDir, function(result) {
+            console.log(result.url)
+            images = result.url
+            var data = {
+                "title": fields.title,
+                "thumbnail": images,
+                "brief": fields.brief,
+                "is_accept": sess.is_accept,
+                "content": fields.content,
             }
-        })
+            News.findOne({topic_ascii: topic_ascii}, function (err, news) {
+                if (err) console.log(err)
+                if (news) {
+                    news.news.push(data)
+                    news.save()
+                    news.news.sort({updated_at: -1})
+                    return res.redirect('./../news/' + topic_ascii)
+                } else {
+                    return res.render('pages_news/index.ejs')
+                }
+            })
+        });
     })
 })
 
