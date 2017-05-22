@@ -1,1 +1,1 @@
-web: node bin/index.js
+web: nodemon bin/index.js
