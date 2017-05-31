@@ -8,6 +8,8 @@ var event = new Schema({
     brief: {type: String},
     content: {type: String},
     is_accept: {type: Boolean},
+    startDate: {type: Date},
+    endDate: {type: Date},
     created_at: { type: Date, default: Date.now},
     updated_at: { type: Date, default: Date.now}
 },

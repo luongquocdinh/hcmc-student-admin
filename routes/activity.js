@@ -178,31 +178,51 @@ router.post('/activity/update/:topic_ascii/:id', function (req, res) {
             if (news) {
                 for (var i = 0; i < news.news.length; i++) {
                     if (news.news[i].id === req.params.id) {
-                        dirImage = path.join(__dirname, './../' + news.news[i].thumbnail)
                         if (files.thumbnail.size != 0) {
                             thumbnail = files.thumbnail.path
-                            fs.unlinkSync(dirImage)
+                            cloudinary.uploader.upload(thumbnail, function(result) {
+                                dirImage = result.url
+                                if (fields.is_accept == 'on') {
+                                    fields.is_accept = true
+                                } else {
+                                    fields.is_accept = false
+                                }
+                                var data = {
+                                    "title": fields.title,
+                                    "thumbnail": dirImage,
+                                    "brief": fields.brief,
+                                    "is_accept": fields.is_accept,
+                                    "content": fields.content,
+                                }
+                                news.news[i].title = data.title
+                                news.news[i].thumbnail = data.thumbnail
+                                news.news[i].brief = data.brief
+                                news.news[i].is_accept = data.is_accept
+                                news.news[i].content = data.content
+                                news.save()
+                            })
                         } else {
-                            thumbnail = dirImage
+                            dirImage = news.news[i].thumbnail
+                            if (fields.is_accept == 'on') {
+                                fields.is_accept = true
+                            } else {
+                                fields.is_accept = false
+                            }
+                            var data = {
+                                "title": fields.title,
+                                "thumbnail": dirImage,
+                                "brief": fields.brief,
+                                "is_accept": fields.is_accept,
+                                "content": fields.content,
+                            }
+                            news.news[i].title = data.title
+                            news.news[i].thumbnail = data.thumbnail
+                            news.news[i].brief = data.brief
+                            news.news[i].is_accept = data.is_accept
+                            news.news[i].content = data.content
+                            news.save()
                         }
-                        if (fields.is_accept == 'on') {
-                            fields.is_accept = true
-                        } else {
-                            fields.is_accept = false
-                        }
-                         var data = {
-                            "title": fields.title,
-                            "thumbnail": thumbnail.substring(thumbnail.indexOf('/uploads/')),
-                            "brief": fields.brief,
-                            "is_accept": fields.is_accept,
-                            "content": fields.content,
-                        }
-                        news.news[i].title = data.title
-                        news.news[i].thumbnail = data.thumbnail
-                        news.news[i].brief = data.brief
-                        news.news[i].is_accept = data.is_accept
-                        news.news[i].content = data.content
-                        news.save()
+                        
                         return res.redirect('./../../../activity/' + topic_ascii)
                     }
                 }

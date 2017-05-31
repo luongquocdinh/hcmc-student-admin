@@ -31,7 +31,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body pad">
-            <form action="/news" method="POST">
+            <form action="/event/<%=news._id%>/update" method="POST" enctype="multipart/form-data">
                   <div class="form-group" style="width: 30%;">
                     <%if (news.is_accept == true) {%>
                         <h4><span class="label label-success">Bài đã kiểm duyệt</span></h4>
@@ -54,6 +54,28 @@
                     <label for="exampleInputFile">Hình Thumbnail</label>
                     <input type='file' id="thumbnail" name="thumbnail"/>
                     <img id="blah" src="<%=news.thumbnail%>" height="100px;" width="100px;" />
+                  </div>
+
+                  <div class="row">
+                      <div class="form-group col-md-6">
+                          <label>Ngày bắt đầu:</label>
+                          <div class="input-group date">
+                              <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                              </div>
+                              <input type="date" value="<%= start %>" name="startDate" class="form-control pull-right">
+                          </div>
+                      </div>
+
+                      <div class="form-group col-md-6">
+                          <label>Ngày kết thúc:</label>
+                          <div class="input-group date">
+                              <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                              </div>
+                              <input type="date" value="<%= end %>" name="endDate" class="form-control pull-right">
+                          </div>
+                      </div>
                   </div>
 
                   <div class="form-group">
