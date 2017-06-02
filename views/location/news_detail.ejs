@@ -1,0 +1,87 @@
+
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Tin Tức
+      <small>HCMC-STUDENTS</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="#">Tin Tức</a></li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-info">
+          <div class="box-header">
+            <h3 class="box-title">Đăng Tin Tức
+              <small>HCMC-STUDENTS</small>
+            </h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body pad">
+            <form action="/location/update/<%=topic.topic_ascii%>/<%=news.id%>" method="POST" enctype="multipart/form-data">
+
+                  <div class="form-group" style="width: 30%;">
+                    <%if (news.is_accept == true) {%>
+                        <h4><span class="label label-success">Bài đã kiểm duyệt</span></h4>
+                    <%} else {%>
+                        <h4><span class="label label-danger">Bài chưa kiểm duyệt</span></h4>
+                    <%}%>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Tiêu đề</label>
+                    <input type="text" name="title" value="<%= news.title %>" class="form-control">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Đoạn mô tả ngắn</label>
+                    <textarea type="text" name="brief" class="form-control"><%= news.brief %></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputFile">Hình Thumbnail</label>
+                    <input type='file' id="thumbnail" name="thumbnail"/>
+                    <img id="blah" src="<%=news.thumbnail%>" height="100px;" width="100px;" />
+                  </div>
+
+                  <div class="form-group">
+                    <label>Nội dung</label>
+                    <textarea id="editor1" name="content" rows="10" cols="80" class="form-control">
+                        <%= news.content %>
+                    </textarea>
+                  </div>
+
+                  <div class="form-group">
+                      <h4>
+                        <strong>Xác nhận đăng bài</strong>
+                        <%if (news.is_accept == true) { %>
+                          <input type="checkbox" name="is_accept" checked style="margin-left: 10px;">
+                        <% } else { %>
+                          <input type="checkbox" name="is_accept" style="margin-left: 10px;">                        
+                        <% } %>
+                      </h4>
+                  </div>
+
+                  <div class="form-group">
+                    <input type="submit" value="Lưu" class="btn btn-primary" style="float: right;"/>
+                  </div>
+            </form>
+          </div>
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col-->
+    </div>
+    <!-- ./row -->
+  </section>
+  <!-- /.content -->
+  <script>
+      $(function () {
+        CKEDITOR.replace('editor1');
+      });
+  </script>

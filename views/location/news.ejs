@@ -1,0 +1,85 @@
+<section class="content-header">
+    <h1>
+        Tin Tức
+        <small>HCMC-STUDENTS</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Tin Tức</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Tin Tức</h3>
+                    <% if (req.session.position === 'manager') { %>
+                        <a class="btn btn-primary pull-right add_topic">Thêm Chủ Đề</a>
+                    <% } %>
+                </div>
+
+                <div class="box-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Các Chủ Đề</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% news.forEach(function (data) { %>
+                                <% if (req.session.position === 'member') { %>
+                                    <% for (var i = 0; i < req.session.topic.length; i++) { %>
+                                        <% if (data.id == req.session.topic[i]) { %>
+                                            <tr>
+                                                <td>
+                                                    <strong><a href="location/<%= data.topic_ascii %>"><%= data.topic %></strong></a>
+                                                </td>
+                                            </tr>
+                                        <% } %>
+                                    <% } %>    
+                                 <% } else if (req.session.position === 'manager') { %>
+                                        <tr>
+                                            <td>
+                                                <strong><a href="location/<%= data.topic_ascii %>"><%= data.topic %></strong></a>
+                                            </td>
+                                        </tr>
+                                    <% } %>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>            
+<section>
+
+<div class="modal" id="modal_news">
+    <div class="modal-dialog" style="width: 60%;height: 50%">
+        <div class="modal-content" style="height: auto;min-height: 100%;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Thêm Chủ Đề</h4>
+            </div>
+
+            <div class="modal-body" id="modalBody" style="height:auto;min-height: 100%">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <form action="/location/topic/add" method="POST">
+                            <div class="form-group">
+                                <label>Chủ đề</label>
+                                <input type="text" name="topic" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-default" style="float: right;"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

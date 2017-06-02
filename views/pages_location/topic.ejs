@@ -1,0 +1,51 @@
+<% include ../partials/head %>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+
+		<% include ../partials/header %>
+
+		<% include ../partials/aside %>
+
+		<div class="content-wrapper">
+			<% include ../location/topic %>
+		</div>
+
+		<% include ../partials/footer %>
+
+
+		<div class="control-sidebar-bg"></div>
+	</div>
+<style>
+	#exTab2 {
+		width: 100%;
+	}
+</style>	
+<script>
+    $(".add_news").click(function () {
+        $('#modal_news').modal('show');
+        return false;
+    });
+
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			
+			reader.onload = function (e) {
+				$('#blah').attr('src', e.target.result);
+			}
+			
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+	
+	$("#thumbnail").change(function(){
+		readURL(this);
+	});
+
+	$(function () {
+		CKEDITOR.replace('editor1');
+	});
+</script>
+<% include ../partials/tail %>

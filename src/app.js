@@ -12,6 +12,7 @@ var activity = require('./../routes/activity')
 var gift = require('./../routes/gift')
 var event = require('./../routes/event')
 var images = require('./../routes/images')
+var location = require('./../routes/location')
 var feedback = require('./../routes/feedback')
 let path = require('path')
 
@@ -46,6 +47,7 @@ app.use('/', activity)
 app.use('/', gift)
 app.use('/', event)
 app.use('/', images)
+app.use('/', location)
 app.use('/', feedback)
 
 module.exports = app

@@ -7,7 +7,7 @@ var router = express.Router()
 
 var User = require('./../models/user')
 var Login = require('./../models/login')
-var Activity = require('./../models/activity')
+var Location = require('./../models/location')
 var Topic = require('./../models/topic')
 
 var cloudinary = require('cloudinary')
@@ -16,6 +16,7 @@ cloudinary.config({
   api_key: '174213315926813', 
   api_secret: 'QgfzJyPCJBSjdkWqPTuBWeSc3D4' 
 });
+
 
 var sess;
 
@@ -32,17 +33,17 @@ function convertToASCII(str) {
     return str;
 }
 
-router.get('/activity', function (req, res) {
+router.get('/location', function (req, res) {
     sess = req.session
     if (sess.email) {
-        Activity.find({}, function (err, data) {
+        Location.find({}, function (err, data) {
             if (err) {
-                return res.render('pages_activity/index.ejs')
+                return res.render('pages_location/index.ejs')
             }
     
             if (data) {
-                return res.render('pages_activity/activity.ejs', {
-                    activity: data,
+                return res.render('pages_location/news.ejs', {
+                    news: data,
                     req: req
                 })
             }
@@ -52,50 +53,50 @@ router.get('/activity', function (req, res) {
     }
 })
 
-router.get('/activity/:topic_ascii', function (req, res) {
+router.get('/location/:topic_ascii', function (req, res) {
     let news = []
-    Activity.findOne({topic_ascii: req.params.topic_ascii})
+    Location.findOne({topic_ascii: req.params.topic_ascii})
         .sort({updated_at: -1})
         .then(data => {
             var i = data.news.length - 1
             for (i; i >= 0; i--){
                 news.push(data.news[i])
             }
-            return res.render('pages_activity/topic.ejs', {
+            return res.render('pages_location/topic.ejs', {
                 data: data,
                 news: news
             })
         })
         .catch(err => {
-            return res.render('pages_activity/index.ejs')
+            return res.render('pages_location/index.ejs')
         })
 })
 
-router.post('/activity/topic/add', function (req, res) {
+router.post('/location/topic/add', function (req, res) {
     let topic = req.body.topic
     let topic_ascii = convertToASCII(topic)
-    var data = Activity({
+    var data = Location({
         topic: topic,
         topic_ascii: topic_ascii,
         is_enable: true,
         news: []
     })
 
-    Activity.findOne({topic: req.body.topic}, function (err, topic) {
+    Location.findOne({topic: req.body.topic}, function (err, topic) {
         if (err) throw err
         if (!topic) {
             data.save(function (err) {
                 if (err) throw err
-                Activity.findOne({topic: req.body.topic}, function (err, info) {
+                Location.findOne({topic: req.body.topic}, function (err, info) {
                     if (err) throw err
                     if (info) {
                         info_topic = Topic({
                             id_topic: info._id,
-                            name_source: 'Hoạt động',
-                            name_topic: info.topic
+                            name_source: 'Địa Điểm',
+                            name_topic: info.topic,
                         })
                         info_topic.save()
-                        return res.redirect('/activity')
+                        return res.redirect('/location')
                     }
                 })
             })
@@ -105,12 +106,12 @@ router.post('/activity/topic/add', function (req, res) {
     })
 })
 
-router.post('/activity/add/news', function (req, res) {
+router.post('/location/add/news', function (req, res) {
     var form = new formidable.IncomingForm()
 
     form.multiples = true
     form.keepExtensions = true
-    form.uploadDir = path.join(__dirname, './../uploads/activity')
+    form.uploadDir = path.join(__dirname + './../uploads/location')
     form.parse(req, function (err, fields, files) {
         if (err) {
             console.log('Error is: ' + err)
@@ -127,28 +128,28 @@ router.post('/activity/add/news', function (req, res) {
                 "is_accept": sess.is_accept,
                 "content": fields.content,
             }
-            Activity.findOne({topic_ascii: topic_ascii}, function (err, news) {
+            Location.findOne({topic_ascii: topic_ascii}, function (err, news) {
                 if (err) console.log(err)
                 if (news) {
                     news.news.push(data)
                     news.save()
                     news.news.sort({updated_at: -1})
-                    return res.redirect('./../../activity/' + topic_ascii)
+                    return res.redirect('./../../location/' + topic_ascii)
                 } else {
-                    return res.render('pages_activity/index.ejs')
+                    return res.render('pages_location/index.ejs')
                 }
             })
-        })
+        });
     })
 })
 
-router.get('/activity/:topic_ascii/:id', function (req, res) {
-    Activity.findOne({topic_ascii: req.params.topic_ascii}, function (err, news) {
+router.get('/location/:topic_ascii/:id', function (req, res) {
+    Location.findOne({topic_ascii: req.params.topic_ascii}, function (err, news) {
         if (err) return console.log(err)
         if (news) {
             for (var i = 0; i < news.news.length; i++) {
                 if (news.news[i].id === req.params.id) {
-                    return res.render('pages_activity/news_detail.ejs', {
+                    return res.render('pages_location/news_detail.ejs', {
                         topic: news,
                         news: news.news[i]
                     })
@@ -158,21 +159,21 @@ router.get('/activity/:topic_ascii/:id', function (req, res) {
     })
 })
 
-router.post('/activity/update/:topic_ascii/:id', function (req, res) {
+router.post('/location/update/:topic_ascii/:id', function (req, res) {
     var form = new formidable.IncomingForm()
     let thumbnail = ''
     let dirImage = ''
 
     form.multiples = true
     form.keepExtensions = true
-    form.uploadDir = path.join(__dirname, './../uploads/activity')
+    form.uploadDir = path.join(__dirname, './../uploads/location')
     form.parse(req, function (err, fields, files) {
         if (err) {
             console.log('Error is: ' + err)
         }
         var topic_ascii = req.params.topic_ascii
         var id = req.params.id
-        Activity.findOne({topic_ascii: topic_ascii}, function (err, news) {
+        Location.findOne({topic_ascii: topic_ascii}, function (err, news) {
             if (err) console.log(err)
             if (news) {
                 for (var i = 0; i < news.news.length; i++) {
@@ -222,14 +223,14 @@ router.post('/activity/update/:topic_ascii/:id', function (req, res) {
                             news.save()
                         }
                         
-                        return res.redirect('./../../../activity/' + topic_ascii)
+                        return res.redirect('./../../../location/' + topic_ascii)
                     }
                 }
             } else {
                 if (files.thumbnail) {
                     fs.unlink(files.thumbnail.path)
                 }
-                return res.render('pages_activity/index.ejs')
+                return res.render('pages_location/index.ejs')
             }
         })
     })

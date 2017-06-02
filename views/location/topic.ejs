@@ -1,0 +1,173 @@
+<section class="content-header">
+    <h1>
+        Tin Tức
+        <small>HCMC-STUDENTS</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Tin Tức</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title"><%= data.topic %></h3>
+                    <a class="btn btn-primary pull-right add_news">Thêm Tin Tức</a>
+                </div>
+
+                 <div id="exTab2" class="container">	
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#1" data-toggle="tab">Tất cả</a>
+                        </li>
+                        <li>
+                            <a href="#2" data-toggle="tab">Chờ duyệt</a>
+                        </li>
+                        <li>
+                            <a href="#3" data-toggle="tab">Đã duyệt</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content ">
+                        <div class="tab-pane active" id="1">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Các Tin Tức</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (var i = 0; i < news.length; i++) { %>
+                                        <tr>
+                                            <td>
+                                                <strong><a href="/location/<%= data.topic_ascii %>/<%= news[i]._id %>"><%= news[i].title %></a></strong>
+                                            </td>
+                                            <td>
+                                                <%if (news[i].is_accept == true) {%>
+                                                    <span class="label label-success">Đã phê duyệt</span>
+                                                <%} else {%>
+                                                    <span class="label label-danger">Chưa phê duyệt</span>
+                                                <% } %>
+                                            </td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane" id="2">
+                             <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Các Tin Tức</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (var i = 0; i < news.length; i++) { %>
+                                        <% if (news[i].is_accept == false) { %>
+                                            <tr>
+                                                <td>
+                                                    <strong><a href="/location/<%= data.topic_ascii %>/<%= news[i]._id %>"><%= news[i].title %></a></strong>
+                                                </td>
+                                                <td>
+                                                    <span class="label label-danger">Chưa phê duyệt</span>
+                                                </td>
+                                            </tr>
+                                        <% } %>    
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane" id="3">
+                             <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Các Tin Tức</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (var i = 0; i < news.length; i++) { %>
+                                        <% if (news[i].is_accept == true) { %>
+                                            <tr>
+                                                <td>
+                                                    <strong><a href="/location/<%= data.topic_ascii %>/<%= news[i]._id %>"><%= news[i].title %></a></strong>
+                                                </td>
+                                                <td>
+                                                    <span class="label label-success">Đã phê duyệt</span>
+                                                </td>
+                                            </tr>
+                                        <% } %>    
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>    
+                 </div>   
+            </div>
+        </div>
+    </div>            
+<section>
+
+<div class="modal" id="modal_news">
+    <div class="modal-dialog" style="width: 60%;height: 50%">
+        <div class="modal-content" style="height: auto;min-height: 100%;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Thêm Tin Tức</h4>
+            </div>
+
+            <div class="modal-body" id="modalBody" style="height:auto;min-height: 100%">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <form method="POST" action="/location/add/news" enctype="multipart/form-data">
+                            <div class="box">
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <input type="hidden" name="topic_ascii" class="form-control" value="<%= data.topic_ascii %>">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Tiêu đề</label>
+                                        <input type="text" name="title" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Đoạn mô tả ngắn</label>
+                                        <textarea type="text" name="brief" class="form-control"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputFile">Hình Thumbnail</label>
+                                        <input type='file' id="thumbnail" name="thumbnail"/>
+                                        <img id="blah" src="#" height="100px;" width="100px;" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Nội dung</label>
+                                        <textarea id="editor1" name="content" rows="10" cols="80" class="form-control"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-default" style="float: right;"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
