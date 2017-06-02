@@ -1,0 +1,75 @@
+<section class="content-header">
+    <h1>
+        Hình Ảnh
+        <small>HCMC-STUDENTS</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Hình ảnh</a></li>
+    </ol>
+</section>
+
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-info">
+                 <div class="box-header">
+                    <h3 class="box-title"><%= news.title %>
+                    <small>HCMC-STUDENTS</small>
+                    </h3>
+                    <!-- tools box -->
+                    <div class="pull-right box-tools">
+                    <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove">
+                        <i class="fa fa-times"></i></button>
+                    </div>
+                    <!-- /. tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body pad">
+                    <form action="/images/<%=news._id%>/update" method="POST" enctype="multipart/form-data">
+                        <div class="form-group" style="width: 30%;">
+                            <%if (news.is_accept == true) {%>
+                                <h4><span class="label label-success">Bài đã kiểm duyệt</span></h4>
+                            <%} else {%>
+                                <h4><span class="label label-danger">Bài chưa kiểm duyệt</span></h4>
+                            <%}%>
+                        </div>
+
+                         <div class="form-group">
+                            <h4>
+                                <strong>Xác nhận đăng bài</strong>
+                                <%if (news.is_accept == true) { %>
+                                <input type="checkbox" name="is_accept" checked style="margin-left: 10px;">
+                                <% } else { %>
+                                <input type="checkbox" name="is_accept" style="margin-left: 10px;">                        
+                                <% } %>
+                            </h4>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tiêu đề</label>
+                            <input type="text" name="title" value="<%= news.title %>" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Hình ảnh</label>
+                        </div>
+
+                        <% for (var i = 0; i < news.images.length; i++) { %>
+                            <div class="show-image">
+                                <img src="<%= news.images[i]%>" width="200px" height="200px" alt="image<%=i%>">
+                                <input class="delete" type="button" value="Delete" />
+                            </div>
+                        <% } %>
+
+                        <div>
+                            <input type="submit" value="Xác nhận" class="btn btn-default" style="float: right;"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+  </div>  
+</section>

@@ -1,0 +1,58 @@
+<% include ../partials/head %>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+
+		<% include ../partials/header %>
+
+		<% include ../partials/aside %>
+
+		<div class="content-wrapper">
+			<% include ../images/news %>
+		</div>
+
+		<% include ../partials/footer %>
+
+
+		<div class="control-sidebar-bg"></div>
+	</div>
+<script>
+	// Multiple images preview in browser
+    var imagesPreview = function(input, placeToInsertImagePreview) {
+
+        if (input.files) {
+            var filesAmount = input.files.length;
+
+            for (i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+
+                reader.onload = function(event) {
+                    $($.parseHTML('<img width="100px" height="100px">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview)
+                }
+
+                reader.readAsDataURL(input.files[i]);
+            }
+        }
+
+    };
+
+    $('#gallery-photo-add').on('change', function() {
+        imagesPreview(this, 'div.gallery');
+    });
+
+	$(".remove-ignore").click(function (e) {
+		e.preventDefault();
+		var input = $("input[name=thumbnail]");
+		var fileName = input.val()
+		if (fileName) {
+			input.val('')
+		}
+		$(".gallery img").remove();
+	});
+
+	$(".add_news").click(function () {
+        $('#modal_news').modal('show');
+        return false;
+    });
+</script>
+<% include ../partials/tail %>
