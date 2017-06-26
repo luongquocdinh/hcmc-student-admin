@@ -1,12 +1,8 @@
 <section class="content-header">
     <h1>
-        Tin Tức
+        Địa Điểm
         <small>HCMC-STUDENTS</small>
     </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tin Tức</a></li>
-    </ol>
 </section>
 
 <section class="content">
@@ -14,7 +10,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Tin Tức</h3>
+                    <h3 class="box-title">Địa Điểm</h3>
                     <% if (req.session.position === 'manager') { %>
                         <a class="btn btn-primary pull-right add_topic">Thêm Chủ Đề</a>
                     <% } %>
@@ -28,7 +24,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <% news.forEach(function (data) { %>
+                            <% topic.forEach(function (data) { %>
                                 <% if (req.session.position === 'member') { %>
                                     <% for (var i = 0; i < req.session.topic.length; i++) { %>
                                         <% if (data.id == req.session.topic[i]) { %>
@@ -67,7 +63,7 @@
             <div class="modal-body" id="modalBody" style="height:auto;min-height: 100%">
                 <div class="row">
                     <div class="col-xs-12">
-                        <form action="/location/topic/add" method="POST">
+                        <form action="location/topic/add" method="POST">
                             <div class="form-group">
                                 <label>Chủ đề</label>
                                 <input type="text" name="topic" class="form-control" required>

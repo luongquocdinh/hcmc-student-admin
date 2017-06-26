@@ -3,10 +3,6 @@
         Tin Tức
         <small>HCMC-STUDENTS</small>
     </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tin Tức</a></li>
-    </ol>
 </section>
 
 <section class="content">
@@ -14,7 +10,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title"><%= data.topic %></h3>
+                    <h3 class="box-title"><%= topic %></h3>
                     <a class="btn btn-primary pull-right add_news">Thêm Tin Tức</a>
                 </div>
 
@@ -43,8 +39,8 @@
                                 <tbody>
                                     <% for (var i = 0; i < news.length; i++) { %>
                                         <tr>
-                                            <td>
-                                                <strong><a href="/news/<%= data.topic_ascii %>/<%= news[i]._id %>"><%= news[i].title %></a></strong>
+                                            <td style="width: 100%">
+                                                <strong><a href="/news/<%= topic_ascii %>/<%= news[i]._id %>"><%= news[i].title %></a></strong>
                                             </td>
                                             <td>
                                                 <%if (news[i].is_accept == true) {%>
@@ -71,8 +67,8 @@
                                     <% for (var i = 0; i < news.length; i++) { %>
                                         <% if (news[i].is_accept == false) { %>
                                             <tr>
-                                                <td>
-                                                    <strong><a href="/news/<%= data.topic_ascii %>/<%= news[i]._id %>"><%= news[i].title %></a></strong>
+                                                <td style="width: 100%">
+                                                    <strong><a href="/news/<%= topic_ascii %>/<%= news[i]._id %>"><%= news[i].title %></a></strong>
                                                 </td>
                                                 <td>
                                                     <span class="label label-danger">Chưa phê duyệt</span>
@@ -96,8 +92,8 @@
                                     <% for (var i = 0; i < news.length; i++) { %>
                                         <% if (news[i].is_accept == true) { %>
                                             <tr>
-                                                <td>
-                                                    <strong><a href="/news/<%= data.topic_ascii %>/<%= news[i]._id %>"><%= news[i].title %></a></strong>
+                                                <td style="width: 100%">
+                                                    <strong><a href="/news/<%= topic_ascii %>/<%= news[i]._id %>"><%= news[i].title %></a></strong>
                                                 </td>
                                                 <td>
                                                     <span class="label label-success">Đã phê duyệt</span>
@@ -131,7 +127,8 @@
                             <div class="box">
                                 <div class="box-body">
                                     <div class="form-group">
-                                        <input type="hidden" name="topic_ascii" class="form-control" value="<%= data.topic_ascii %>">
+                                        <input type="hidden" name="topic_ascii" class="form-control" value="<%= topic_ascii %>">
+                                        <input type="hidden" name="topic" class="form-control" value="<%= topic %>">
                                     </div>
 
                                     <div class="form-group">
@@ -153,6 +150,11 @@
                                     <div class="form-group">
                                         <label>Nội dung</label>
                                         <textarea id="editor1" name="content" rows="10" cols="80" class="form-control"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Tác giả</label>
+                                        <input type="text" name="author" class="form-control" />
                                     </div>
 
                                     <div class="form-group">

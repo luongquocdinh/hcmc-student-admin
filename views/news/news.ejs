@@ -3,10 +3,6 @@
         Tin Tức
         <small>HCMC-STUDENTS</small>
     </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tin Tức</a></li>
-    </ol>
 </section>
 
 <section class="content">
@@ -28,7 +24,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <% news.forEach(function (data) { %>
+                            <% topic.forEach(function (data) { %>
                                 <% if (req.session.position === 'member') { %>
                                     <% for (var i = 0; i < req.session.topic.length; i++) { %>
                                         <% if (data.id == req.session.topic[i]) { %>

@@ -11,7 +11,10 @@ var news = new Schema({
     thumbnail: {type: String},
     brief: {type: String},
     content: {type: String},
+    author: {type: String},
     is_accept: {type: Boolean},
+    datetime: {type: Number},
+    views: {type: Number, default: 0},
 
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },

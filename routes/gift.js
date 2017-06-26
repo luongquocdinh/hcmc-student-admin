@@ -1,23 +1,23 @@
-var express = require('express')
-var path = require('path')
-var formidable = require('formidable')
-var session = require('express-session')
-var fs = require('fs')
-var router = express.Router()
+let express = require('express')
+let path = require('path')
+let formidable = require('formidable')
+let session = require('express-session')
+let fs = require('fs')
+let router = express.Router()
 
-var User = require('./../models/user')
-var Login = require('./../models/login')
-var Gift = require('./../models/gift')
-var Topic = require('./../models/topic')
+let Login = require('./../models/login')
+let News = require('./../models/news')
+let Topic = require('./../models/topic')
 
-var cloudinary = require('cloudinary')
+let cloudinary = require('cloudinary')
 cloudinary.config({ 
   cloud_name: 'hwjtqthls', 
   api_key: '174213315926813', 
   api_secret: 'QgfzJyPCJBSjdkWqPTuBWeSc3D4' 
 });
 
-var sess;
+
+let sess;
 
 function convertToASCII(str) {
     str = str.toLowerCase();
@@ -35,132 +35,105 @@ function convertToASCII(str) {
 router.get('/gift', function (req, res) {
     sess = req.session
     if (sess.email) {
-        Gift.find({}, function (err, data) {
-            if (err) {
-                return res.render('pages_gift/index.ejs')
-            }
-    
-            if (data) {
-                return res.render('pages_gift/gift.ejs', {
-                    gift: data,
+        Topic.find({source: 'gift'})
+            .then(data => {
+                return res.render('pages_gift/news.ejs', {
+                    topic: data,
                     req: req
                 })
-            }
-        })
+            }).catch(err => {
+                return res.render('pages_gift/index.ejs');
+            })
     } else {
         return res.redirect('/')
     }
 })
 
 router.get('/gift/:topic_ascii', function (req, res) {
-    let news = []
-    Gift.findOne({topic_ascii: req.params.topic_ascii})
-        .sort({updated_at: -1})
-        .then(data => {
-            var i = data.news.length - 1
-            for (i; i >= 0; i--){
-                news.push(data.news[i])
-            }
-            return res.render('pages_gift/topic.ejs', {
-                data: data,
-                news: news
+    let topic_ascii = req.params.topic_ascii
+    Topic.findOne({topic_ascii: topic_ascii})
+        .then(topic => {
+            News.find({topic_ascii: topic_ascii})
+            .sort({updated_at: -1})
+            .then(data => {
+                return res.render('pages_gift/topic.ejs', {
+                    news: data,
+                    topic_ascii: topic_ascii,
+                    topic: topic.topic
+                })
             })
-        })
-        .catch(err => {
-            return res.render('pages_gift/index.ejs')
+            .catch(err => {
+                return res.render('pages_gift/index.ejs')
+            })
         })
 })
 
 router.post('/gift/topic/add', function (req, res) {
     let topic = req.body.topic
     let topic_ascii = convertToASCII(topic)
-    var data = Gift({
+    let info_topic = Topic({
         topic: topic,
-        topic_ascii: topic_ascii,
-        is_enable: true,
-        news: []
+        source: 'gift',
+        topic_ascii: topic_ascii
     })
-
-    Gift.findOne({topic: req.body.topic}, function (err, topic) {
-        if (err) throw err
-        if (!topic) {
-            data.save(function (err) {
-                if (err) throw err
-                Gift.findOne({topic: req.body.topic}, function (err, info) {
-                    if (err) throw err
-                    if (info) {
-                        info_topic = Topic({
-                            id_topic: info._id,
-                            name_source: 'Quà Tặng',
-                            name_topic: info.topic
-                        })
-                        info_topic.save()
-                        return res.redirect('/gift')
-                    }
-                })
-            })
-        } else {
-            return res.redirect('/')
-        }
-    })
+    info_topic.save()
+    return res.redirect('/gift')    
 })
 
 router.post('/gift/add/news', function (req, res) {
-    var form = new formidable.IncomingForm()
+    let form = new formidable.IncomingForm()
 
     form.multiples = true
     form.keepExtensions = true
-    form.uploadDir = path.join(__dirname, './../uploads/gift')
+    form.uploadDir = path.join(__dirname + './../uploads/gift')
     form.parse(req, function (err, fields, files) {
         if (err) {
             console.log('Error is: ' + err)
         }
-        var imageDir = files.thumbnail.path
-        var topic_ascii = fields.topic_ascii
-        var images = ''
+        let imageDir = files.thumbnail.path
+        let topic_ascii = fields.topic_ascii
+        let images = ''
         cloudinary.uploader.upload(imageDir, function(result) {
-            console.log(result.url)
             images = result.url
-            var data = {
+            let data = News({
                 "title": fields.title,
+                "source": 'gift',
+                "topic": fields.topic,
+                "topic_ascii": fields.topic_ascii,
+                "datetime": Math.floor(Date.now() / 1000),
                 "thumbnail": images,
                 "brief": fields.brief,
                 "is_accept": sess.is_accept,
                 "content": fields.content,
-            }
-            Gift.findOne({topic_ascii: topic_ascii}, function (err, news) {
-                if (err) console.log(err)
-                if (news) {
-                    news.news.push(data)
-                    news.save()
-                    news.news.sort({updated_at: -1})
-                    return res.redirect('./../../gift/' + topic_ascii)
-                } else {
-                    return res.render('pages_gift/index.ejs')
-                }
+                "author": fields.author
             })
-        })
+            
+            data.save(function (err) {
+                if (err) {
+                    return res.render('pages_gift/index.ejs');
+                }
+
+                return res.redirect('/gift/' + topic_ascii);
+            }) 
+        });
     })
 })
 
 router.get('/gift/:topic_ascii/:id', function (req, res) {
-    Gift.findOne({topic_ascii: req.params.topic_ascii}, function (err, news) {
-        if (err) return console.log(err)
-        if (news) {
-            for (var i = 0; i < news.news.length; i++) {
-                if (news.news[i].id === req.params.id) {
-                    return res.render('pages_gift/news_detail.ejs', {
-                        topic: news,
-                        news: news.news[i]
-                    })
-                }
-            }
-        }
-    })
+    let id = req.params.id
+
+    News.findOne({_id: id})
+        .then(data => {
+            return res.render('pages_gift/news_detail.ejs', {
+                news: data
+            });
+        }).catch(err => {
+            return res.render('pages_gift/index.ejs');
+        })
 })
 
 router.post('/gift/update/:topic_ascii/:id', function (req, res) {
-    var form = new formidable.IncomingForm()
+    let form = new formidable.IncomingForm()
     let thumbnail = ''
     let dirImage = ''
 
@@ -171,67 +144,49 @@ router.post('/gift/update/:topic_ascii/:id', function (req, res) {
         if (err) {
             console.log('Error is: ' + err)
         }
-        var topic_ascii = req.params.topic_ascii
-        var id = req.params.id
-        Gift.findOne({topic_ascii: topic_ascii}, function (err, news) {
-            if (err) console.log(err)
-            if (news) {
-                for (var i = 0; i < news.news.length; i++) {
-                    if (news.news[i].id === req.params.id) {
-                        if (files.thumbnail.size != 0) {
-                            thumbnail = files.thumbnail.path
-                            cloudinary.uploader.upload(thumbnail, function(result) {
-                                dirImage = result.url
-                                if (fields.is_accept == 'on') {
-                                    fields.is_accept = true
-                                } else {
-                                    fields.is_accept = false
-                                }
-                                var data = {
-                                    "title": fields.title,
-                                    "thumbnail": dirImage,
-                                    "brief": fields.brief,
-                                    "is_accept": fields.is_accept,
-                                    "content": fields.content,
-                                }
-                                news.news[i].title = data.title
-                                news.news[i].thumbnail = data.thumbnail
-                                news.news[i].brief = data.brief
-                                news.news[i].is_accept = data.is_accept
-                                news.news[i].content = data.content
-                                news.save()
-                            })
+        let topic_ascii = req.params.topic_ascii
+        let id = req.params.id
+        News.findOne({_id: id}) 
+            .then(news => {
+                if (err) console.log(err)
+                
+                if (files.thumbnail.size != 0) {
+                    thumbnail = files.thumbnail.path
+                    cloudinary.uploader.upload(thumbnail, function(result) {
+                        dirImage = result.url
+                        if (fields.is_accept == 'on') {
+                            fields.is_accept = true
                         } else {
-                            dirImage = news.news[i].thumbnail
-                            if (fields.is_accept == 'on') {
-                                fields.is_accept = true
-                            } else {
-                                fields.is_accept = false
-                            }
-                            var data = {
-                                "title": fields.title,
-                                "thumbnail": dirImage,
-                                "brief": fields.brief,
-                                "is_accept": fields.is_accept,
-                                "content": fields.content,
-                            }
-                            news.news[i].title = data.title
-                            news.news[i].thumbnail = data.thumbnail
-                            news.news[i].brief = data.brief
-                            news.news[i].is_accept = data.is_accept
-                            news.news[i].content = data.content
-                            news.save()
+                            fields.is_accept = false
                         }
-                        
-                        return res.redirect('./../../../gift/' + topic_ascii)
+                    
+                        news.title = fields.title
+                        news.thumbnail = dirImage
+                        news.brief = fields.brief
+                        news.content = fields.content
+                        news.is_accept = fields.is_accept
+                        news.datetime = Math.floor(Date.now() / 1000)
+                        news.author = fields.author
+                        news.save() 
+                    })
+                } else {
+                    if (fields.is_accept == 'on') {
+                        fields.is_accept = true
+                    } else {
+                        fields.is_accept = false
                     }
+                    news.title = fields.title
+                    news.brief = fields.brief
+                    news.content = fields.content
+                    news.is_accept = fields.is_accept
+                    news.datetime = Math.floor(Date.now() / 1000)
+                    news.author = fields.author
+                    news.save() 
                 }
-            } else {
-                if (files.thumbnail) {
-                    fs.unlink(files.thumbnail.path)
-                }
-                return res.render('pages_gift/index.ejs')
-            }
+                
+                return res.redirect('./../../../gift/' + topic_ascii)
+        }).catch(err => {
+            return res.render('pages_gift/index.ejs');
         })
     })
 })
