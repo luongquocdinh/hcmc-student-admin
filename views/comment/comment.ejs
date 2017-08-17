@@ -1,0 +1,46 @@
+<section class="content-header">
+    <h1>
+        Bình Luận
+        <small>HCMC-STUDENTS</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Tin Tức</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Bình luận</h3>
+                </div>
+
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <th>Bài viết</th>
+                                <th>Nội dung</th>
+                                <th>Người dùng</th>
+                                <th>Xóa</th>
+                            </thead>
+
+                            <tbody>
+                                 <% datas.forEach(function (data) { %>
+                                    <tr>
+                                        <td><%= data.title %></td>
+                                        <td><%= data.content %></td>
+                                        <td><%= data.user %></td>
+                                        <td><button type="button" class="btn btn-danger">Xóa</button></td>
+                                    </tr>
+                                <% }) %> 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+<section>
