@@ -30,6 +30,7 @@
 			url: "https://hcmc-student-api.herokuapp.com/comment/delete",
 			crossDomain: true,
 			data: data,
+			dataType: "json",
 			success: function (response) {
 				alert("successful")
 				$("tbody > tr#" + id).remove();
