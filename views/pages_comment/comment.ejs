@@ -16,4 +16,28 @@
 
 		<div class="control-sidebar-bg"></div>
 	</div>
+
+<script>
+	$('.delete').click(function (e) {
+		var id = $(this).attr("data-id");
+		e.preventDefault();
+		var data = {
+			id: id 
+		}
+		console.log(data);
+		$.ajax({
+			type: "POST",
+			url: "https://hcmc-student-api.herokuapp.com/comment/delete",
+			crossDomain: true,
+			data: data,
+			success: function (response) {
+				alert("successful")
+				$("tbody > tr#" + id).remove();
+			},
+			error: function (err) {
+				alert(err);
+			}
+		})
+	})
+</script>
 <% include ../partials/tail %>

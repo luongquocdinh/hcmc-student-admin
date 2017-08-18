@@ -41,6 +41,7 @@ router.get('/comment', (req, res) => {
 
                 response = response.map(r => {
                     return {
+                        id: r._id,
                         user: r.name,
                         content: r.content,
                         news_id: r.news_id,

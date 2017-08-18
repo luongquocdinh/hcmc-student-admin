@@ -29,11 +29,11 @@
 
                             <tbody>
                                  <% datas.forEach(function (data) { %>
-                                    <tr>
+                                    <tr id=<%= data.id %>>
                                         <td><%= data.title %></td>
                                         <td><%= data.content %></td>
                                         <td><%= data.user %></td>
-                                        <td><button type="button" class="btn btn-danger">Xóa</button></td>
+                                        <td><button type="button" class="btn btn-danger delete" data-id=<%= data.id %>>Xóa</button></td>
                                     </tr>
                                 <% }) %> 
                             </tbody>
