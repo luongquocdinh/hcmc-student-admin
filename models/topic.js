@@ -7,6 +7,6 @@ var topic = new Schema({
     topic: String
 })
 
-var Topic = mongoose.model('topic', topic)
+var Topic = mongoose.model('topics', topic)
 
 module.exports = Topic

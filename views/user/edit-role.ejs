@@ -25,12 +25,12 @@
                                 <h4>Tin Tức</h4>
                                 <div class="row">
                                     <% topic.forEach(function (data) { %>
-                                        <% if (data.name_source === 'Tin Tức' ) { %>
+                                        <% if (data.source === 'news' ) { %>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>
-                                                        <input id="<%= data.id_topic %>" name="<%= data.id_topic %>" type="checkbox">
-                                                        <%= data.name_topic %>
+                                                        <input id="<%= data._id %>" name="<%= data._id %>" type="checkbox">
+                                                        <%= data.topic %>
                                                     </label>
                                                 </div>
                                             </div>
@@ -46,12 +46,12 @@
                                 <h4>Hoạt động</h4>
                                 <div class="row">
                                     <% topic.forEach(function (data) { %>
-                                        <% if (data.name_source === 'Hoạt động' ) { %>
+                                        <% if (data.source === 'activity' ) { %>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>
-                                                        <input id="<%= data.id_topic %>" name="<%= data.id_topic %>" type="checkbox">
-                                                        <%= data.name_topic %>
+                                                        <input id="<%= data._id %>" name="<%= data._id %>" type="checkbox">
+                                                        <%= data.topic %>
                                                     </label>
                                                 </div>
                                             </div>
@@ -67,12 +67,12 @@
                                 <h4>Quà tặng</h4>
                                 <div class="row">
                                     <% topic.forEach(function (data) { %>
-                                        <% if (data.name_source === 'Quà Tặng' ) { %>
+                                        <% if (data.source === 'gift' ) { %>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>
-                                                        <input id="<%= data.id_topic %>" name="<%= data.id_topic %>" type="checkbox">
-                                                        <%= data.name_topic %>
+                                                        <input id="<%= data._id %>" name="<%= data._id %>" type="checkbox">
+                                                        <%= data.topic %>
                                                     </label>
                                                 </div>
                                             </div>
@@ -88,12 +88,12 @@
                                 <h4>Địa Điểm</h4>
                                 <div class="row">
                                     <% topic.forEach(function (data) { %>
-                                        <% if (data.name_source === 'Địa Điểm' ) { %>
+                                        <% if (data.source === 'location' ) { %>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>
-                                                        <input id="<%= data.id_topic %>" name="<%= data.id_topic %>" type="checkbox">
-                                                        <%= data.name_topic %>
+                                                        <input id="<%= data._id %>" name="<%= data._id %>" type="checkbox">
+                                                        <%= data.topic %>
                                                     </label>
                                                 </div>
                                             </div>
