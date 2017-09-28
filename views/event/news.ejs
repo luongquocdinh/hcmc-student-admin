@@ -155,7 +155,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
-                                                <input type="date" name="startDate" class="form-control pull-right">
+                                                <input type="datetime-local" name="startDate" class="form-control pull-right">
                                             </div>
                                         </div>
 
@@ -165,7 +165,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
-                                                <input type="date" name="endDate" class="form-control pull-right">
+                                                <input type="datetime-local" name="endDate" class="form-control pull-right">
                                             </div>
                                         </div>
                                     </div>
@@ -173,6 +173,21 @@
                                     <div class="form-group">
                                         <label>Nội dung</label>
                                         <textarea id="editor1" name="content" rows="10" cols="80" class="form-control"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Địa điểm</label>
+                                        <input type="text" name="address" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Số lượng đăng kí</label>
+                                        <input type="number" name="number" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Hạn đăng kí</label> 
+                                        <input type="datetime-local" name="deadline" class="form-control pull-right"> 
                                     </div>
 
                                     <div class="form-group">

@@ -3,7 +3,7 @@ var path = require('path')
 var formidable = require('formidable')
 var session = require('express-session')
 var fs = require('fs')
-var moment = require('moment')
+var moment = require('moment-timezone')
 var router = express.Router()
 
 var User = require('./../models/user')
@@ -16,7 +16,6 @@ cloudinary.config({
   api_key: '174213315926813', 
   api_secret: 'QgfzJyPCJBSjdkWqPTuBWeSc3D4' 
 });
-
 
 var sess;
 
@@ -40,7 +39,6 @@ router.get('/event', (req, res) => {
 router.post('/event/add', (req, res) => {
     sess = req.session
     var form = new formidable.IncomingForm()
-
     form.multiples = true
     form.keepExtensions = true
     form.uploadDir = path.join(__dirname, './../uploads/event')
@@ -51,16 +49,23 @@ router.post('/event/add', (req, res) => {
         var imageDir = files.thumbnail.path
         var images = ''
         cloudinary.uploader.upload(imageDir, function(result) {
+            let start = new Date(fields.startDate)
+            let end = new Date(fields.endDate)
+            let deadline = new Date(fields.deadline)
             images = result.url
             var data = Event({
                 "title": fields.title,
                 "thumbnail": images,
                 "brief": fields.brief,
-                "startDate": fields.startDate,
-                "endDate": fields.endDate,
+                "startDate":start.getTime(),
+                "endDate": end.getTime(),
                 "content": fields.content,
+                "number": fields.number,
+                "address": fields.address,
+                "deadline": deadline.getTime(),
                 "is_accept": sess.is_accept,
             })
+            fs.unlink(imageDir);
             data.save(function (err, news) {
                 if (err) {
                     return res.render('pages_event/index.ejs')
@@ -75,44 +80,14 @@ router.get('/event/:id', (req, res) => {
     var id = req.params.id
     Event.findOne({_id: id})
         .then(data => {
-            let dateStart = new Date(data.startDate)
-            let dateEnd = new Date(data.endDate)
-            mmStart = dateStart.getMonth() + 1
-            mmEnd = dateEnd.getMonth() + 1
-            let monthStart = ''
-            let monthEnd = ''
-            let dayStart = ''
-            let dayEnd = ''
-            if (dateStart.getMonth() >= 9) {
-                monthStart = mmStart
-            } else {
-                monthStart = '0' + mmStart
-            }
-
-            if (dateEnd.getMonth() >= 9) {
-                monthEnd = mmEnd
-            } else {
-                monthEnd = '0' + mmEnd
-            }
-
-            if (dateStart.getDate() < 10) {
-                dayStart = '0' + dateStart.getDate()
-            } else {
-                dayStart = dateStart.getDate()
-            }
-
-            if (dateEnd.getDate() < 10) {
-                dayEnd = '0' + dateEnd.getDate()
-            } else {
-                dayEnd = dateEnd.getDate()
-            }
-
-            let start = dateStart.getFullYear() + '-' + monthStart + '-' + dayStart
-            let end = dateEnd.getFullYear() + '-' + monthEnd + '-' + dayEnd
+            let start = moment.utc(data.startDate).format('YYYY-MM-DDThh:mm');
+            let end = moment.utc(data.endDate).format('YYYY-MM-DDThh:mm');
+            let deadline = moment.utc(data.deadline).format('YYYY-MM-DDThh:mm');
             return res.render('pages_event/news_detail.ejs', {
                 news: data,
                 start: start,
-                end: end
+                end: end,
+                deadline: deadline
             })
         })
         .catch(err => {

@@ -7,9 +7,16 @@ var event = new Schema({
     thumbnail: {type: String},
     brief: {type: String},
     content: {type: String},
+    number: {type: Number},
+    number_register:{type: Number},
+    address: {type: String},
+    deadline: {type: Number},
+
     is_accept: {type: Boolean},
-    startDate: {type: Date},
-    endDate: {type: Date},
+
+    startDate: {type: Number},
+    endDate: {type: Number},
+
     created_at: { type: Date, default: Date.now},
     updated_at: { type: Date, default: Date.now}
 },

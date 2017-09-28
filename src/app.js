@@ -15,6 +15,7 @@ let images = require('./../routes/images')
 let location = require('./../routes/location')
 let feedback = require('./../routes/feedback')
 let comment = require('./../routes/comment')
+let reward = require('./../routes/reward')
 
 let path = require('path')
 
@@ -52,5 +53,6 @@ app.use('/', images)
 app.use('/', location)
 app.use('/', feedback)
 app.use('/', comment)
+app.use('/', reward)
 
 module.exports = app

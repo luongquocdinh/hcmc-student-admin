@@ -1,0 +1,142 @@
+<section class="content-header">
+    <h1>
+        Kho Quà
+        <small>HCMC-STUDENTS</small>
+    </h1>
+</section>
+
+<section class="content">
+    <div class="box-header">
+        <a class="btn btn-primary pull-right add_reward">Thêm Quà</a>
+    </div>
+    <!-- <div class="row"> -->
+        <% for (var i = 0; i < rewards.length; i++) { %>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="info-box bg-aqua">
+                <span class="info-box-icon">
+                    <img src="<%= rewards[i].thumbnail %>" alt="">
+                </span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text"><%= rewards[i].name %></span>
+                    <span class="info-box-number">Số lượng: <%= rewards[i].number %></span>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 100%"></div>
+                    </div>
+                    <span class="progress-description">
+                                    <%=rewards[i].detail%>
+                                  </span>
+                </div>
+            </div>
+        </div>
+        <% } %>
+        
+        <!-- <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-green">
+                <span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Likes</span>
+                    <span class="info-box-number">41,410</span>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 70%"></div>
+                    </div>
+                    <span class="progress-description">
+                                    70% Increase in 30 Days
+                                  </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-yellow">
+                <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Events</span>
+                    <span class="info-box-number">41,410</span>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 70%"></div>
+                    </div>
+                    <span class="progress-description">
+                                    70% Increase in 30 Days
+                                  </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-red">
+                <span class="info-box-icon"><i class="fa fa-comments-o"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Comments</span>
+                    <span class="info-box-number">41,410</span>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 70%"></div>
+                    </div>
+                    <span class="progress-description">
+                                    70% Increase in 30 Days
+                                  </span>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</section>
+
+<div class="modal" id="modal_reward">
+    <div class="modal-dialog" style="width: 60%;height: 50%">
+        <div class="modal-content" style="height: auto;min-height: 100%;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Thêm Tin Tức</h4>
+            </div>
+
+            <div class="modal-body" id="modalBody" style="height:auto;min-height: 100%">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <form method="POST" action="/reward/add" enctype="multipart/form-data">
+                            <div class="box">
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <label>Tên</label>
+                                        <input type="text" name="name" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Chi tiết</label>
+                                        <textarea type="text" name="detail" class="form-control"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputFile">Hình Thumbnail</label>
+                                        <input type='file' id="thumbnail" name="thumbnail"/>
+                                        <img id="blah" src="/uploads/images.png" height="100px;" width="100px;" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Số lượng sản phẩm</label>
+                                        <input type="number" name="number" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Hạn đổi và nhận thưởng</label> 
+                                        <input type="datetime-local" name="deadline" class="form-control pull-right"> 
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-default" style="float: right;"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
