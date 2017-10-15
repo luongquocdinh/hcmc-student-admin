@@ -38,5 +38,3 @@ build/Release
 node_modules-off
 /.idea/
 .jshintrc
-
-/uploads/
