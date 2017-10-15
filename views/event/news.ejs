@@ -19,7 +19,7 @@
                 </div>
 
 
-                <div id="exTab2" class="container">	
+                <div id="exTab2">	
                     <ul class="nav nav-tabs">
                         <li class="active">
                             <a href="#1" data-toggle="tab">Tất cả</a>
@@ -32,36 +32,38 @@
                         </li>
                     </ul>
 
-                    <div class="tab-content ">
-                        <div class="tab-pane active" id="1">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Các Tin Tức</th>
-                                        <th>Trạng thái</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% for (var i = 0; i < news.length; i++) { %>
+                    <div class="tab-content">
+                        <div class="tab-pane active table-responsive" id="1">
+                            <div class="box-body">
+                                <table id="all" class="table table-bordered table-striped dataTable" role="grid">
+                                    <thead>
                                         <tr>
-                                            <td>
-                                                <strong><a href="/event/<%= news[i]._id %>"><%= news[i].title %></a></strong>
-                                            </td>
-                                            <td>
-                                                <%if (news[i].is_accept == true) {%>
-                                                    <span class="label label-success">Đã phê duyệt</span>
-                                                <%} else {%>
-                                                    <span class="label label-danger">Chưa phê duyệt</span>
-                                                <% } %>
-                                            </td>
+                                            <th>Các Tin Tức</th>
+                                            <th>Trạng thái</th>
                                         </tr>
-                                    <% } %>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <% for (var i = 0; i < news.length; i++) { %>
+                                            <tr>
+                                                <td style="width: 100%">
+                                                    <strong><a href="/event/<%= news[i]._id %>"><%= news[i].title %></a></strong>
+                                                </td>
+                                                <td>
+                                                    <%if (news[i].is_accept == true) {%>
+                                                        <span class="label label-success">Đã phê duyệt</span>
+                                                    <%} else {%>
+                                                        <span class="label label-danger">Chưa phê duyệt</span>
+                                                    <% } %>
+                                                </td>
+                                            </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
-                        <div class="tab-pane" id="2">
-                             <table class="table table-bordered table-striped">
+                        <div class="tab-pane table-responsive" id="2">
+                             <table id="disable" class="table table-bordered table-striped dataTable" role="grid">
                                 <thead>
                                     <tr>
                                         <th>Các Tin Tức</th>
@@ -72,7 +74,7 @@
                                     <% for (var i = 0; i < news.length; i++) { %>
                                         <% if (news[i].is_accept == false) { %>
                                             <tr>
-                                                <td>
+                                                <td style="width: 100%">
                                                     <strong><a href="/event/<%= news[i]._id %>"><%= news[i].title %></a></strong>
                                                 </td>
                                                 <td>
@@ -85,8 +87,8 @@
                             </table>
                         </div>
 
-                         <div class="tab-pane" id="3">
-                             <table class="table table-bordered table-striped">
+                         <div class="tab-pane table-responsive" id="3">
+                             <table id="enable" class="table table-bordered table-striped dataTable" role="grid">
                                 <thead>
                                     <tr>
                                         <th>Các Tin Tức</th>
@@ -97,7 +99,7 @@
                                     <% for (var i = 0; i < news.length; i++) { %>
                                         <% if (news[i].is_accept == true) { %>
                                             <tr>
-                                                <td>
+                                                <td style="width: 100%">
                                                     <strong><a href="/event/<%= news[i]._id %>"><%= news[i].title %></a></strong>
                                                 </td>
                                                 <td>

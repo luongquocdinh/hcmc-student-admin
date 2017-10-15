@@ -25,9 +25,12 @@
     $(".add_news").click(function () {
         $('#modal_news').modal('show');
         return false;
-    });
-
-
+	});
+	
+	$('#all').DataTable()
+	$('#disable').DataTable()
+	$('#enable').DataTable()
+	
 	function readURL(input) {
 		if (input.files && input.files[0]) {
 			var reader = new FileReader();

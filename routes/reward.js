@@ -56,7 +56,7 @@ router.post('/reward/add', (req, res) => {
       fs.unlink(imageDir);
       data.save(function (err, news) {
         if (err) {
-          return res.render('pages_event/index.ejs')
+          return res.render('pages_reward/index.ejs')
         }
         return res.redirect('/reward')
       })
