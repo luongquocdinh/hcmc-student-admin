@@ -1,4 +1,6 @@
 var express = require('express')
+var multer = require('multer');
+var upload = multer({ dest: 'uploads/reward/' });
 var path = require('path')
 var formidable = require('formidable')
 var session = require('express-session')
@@ -32,35 +34,44 @@ router.get('/reward', (req, res) => {
     })
 })
 
-router.post('/reward/add', (req, res) => {
-  var form = new formidable.IncomingForm()
-  form.multiples = true
-  form.keepExtensions = true
-  form.uploadDir = path.join(__dirname, './../uploads/reward')
-  form.parse(req, function (err, fields, files) {
-    if (err) {
-      console.log('Error is: ' + err)
-    }
-    var imageDir = files.thumbnail.path
-    var images = ''
-    cloudinary.uploader.upload(imageDir, function (result) {
-      let deadline = new Date(fields.deadline)
-      images = result.url
+router.get('/reward/:id', (req, res) => {
+  let id = req.params.id
+  Reward.findOne({_id: id})
+    .then(data => {
+      return res.render('pages_reward/detail.ejs');
+    })
+    .catch(err => {
+      return res.render('pages_event/index.ejs')
+    })
+})
+
+router.post('/reward/add', upload.single('thumbnail'), (req, res) => {
+  let partner = []
+  req.body.partner.map(r => {
+    partner.push({
+      name: r[0],
+      address: r[1],
+      number: r[2]
+    })
+  })
+  cloudinary.uploader.upload(req.file.path, function (result) {
+      let deadline = new Date(req.body.deadline)
       var data = Reward({
-        "name": fields.name,
-        "thumbnail": images,
-        "detail": fields.detail,
-        "number": fields.number,
+        "name": req.body.name,
+        "thumbnail": result.url,
+        "detail": req.body.detail,
+        "point": req.body.point,
+        "number": req.body.number,
+        "partner": partner,
         "deadline": deadline.getTime()
       })
-      fs.unlink(imageDir);
+      fs.unlink(req.file.path);
       data.save(function (err, news) {
         if (err) {
           return res.render('pages_reward/index.ejs')
         }
         return res.redirect('/reward')
       })
-    })
   })
 })
 

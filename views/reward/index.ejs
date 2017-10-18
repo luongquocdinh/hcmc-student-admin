@@ -12,25 +12,21 @@
     <!-- <div class="row"> -->
     <% for (var i = 0; i < rewards.length; i++) { %>
         <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="info-box bg-aqua">
-                <span class="info-box-icon">
-                        <img src="<%= rewards[i].thumbnail %>" alt="" style="width: 100%; max-height: 100%;">
-                    </span>
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua">
+                    <img src="<%= rewards[i].thumbnail %>" alt="" style="width: 100%; max-height: 100%;">
+                </span>
 
                 <div class="info-box-content">
                     <span class="info-box-text"><%= rewards[i].name %></span>
                     <span class="info-box-number">Số lượng: <%= rewards[i].number %></span>
-
-                    <div class="progress">
-                        <div class="progress-bar" style="width: 100%"></div>
-                    </div>
                     <span class="progress-description">
-                            <%=rewards[i].detail%>
-                        </span>
+                        <%=rewards[i].detail%>
+                    </span>
                 </div>
             </div>
         </div>
-    <% } %>
+        <% } %>
 </section>
 
 <div class="modal" id="modal_reward">
@@ -62,6 +58,19 @@
                                         <label for="exampleInputFile">Hình Thumbnail</label>
                                         <input type='file' id="thumbnail" name="thumbnail" />
                                         <img id="blah" src="/uploads/images.png" height="100px;" width="100px;" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Số điểm cần đổi</label>
+                                        <input type="number" name="point" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Địa điểm đổi quà</label>
+                                        <br>
+                                        <button id="partner" class="btn btn-info btn-flat" type="button">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
                                     </div>
 
                                     <div class="form-group">
