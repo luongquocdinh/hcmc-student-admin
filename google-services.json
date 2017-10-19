@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "322003287760",
+    "firebase_url": "https://hcmc-student-1e6c6.firebaseio.com",
+    "project_id": "hcmc-student-1e6c6",
+    "storage_bucket": "hcmc-student-1e6c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322003287760:android:674e2be76eaffa32",
+        "android_client_info": {
+          "package_name": "com.hcmc.students"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322003287760-9k91rek46qgbsul74io263gncs8fp1pa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-DjeBOP9bC64_Z5bpNL3tkAhYoMGPsEE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
