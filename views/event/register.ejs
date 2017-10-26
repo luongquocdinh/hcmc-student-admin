@@ -1,0 +1,43 @@
+<section class="content-header">
+    <h1>
+        <%= event.title %>
+        <small>HCMC-STUDENT</small>
+    </h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Danh sách tham gia</h3>
+                    <a class="btn btn-success pull-right" onclick="exportTableToCSV('event.csv')">Xuất file CSV</a>
+                </div>
+
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="list" class="table">
+                            <thead>
+                                <th>STT</th>
+                                <th>Tên</th>
+                                <th>Email</th>
+                                <th>Số điện thoại</th>
+                            </thead>
+
+                            <tbody>
+                                 <% datas.forEach(function (data, index) { %>
+                                    <tr id=<%= data.id %>>
+                                        <td><%= index + 1 %></td>
+                                        <td><%= data.name %></td>
+                                        <td><%= data.email %></td>
+                                        <td><%= data.phone %></td>
+                                    </tr>
+                                <% }) %> 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+<section>

@@ -38,7 +38,9 @@ router.get('/reward/:id', (req, res) => {
   let id = req.params.id
   Reward.findOne({_id: id})
     .then(data => {
-      return res.render('pages_reward/detail.ejs');
+      return res.render('pages_reward/detail.ejs', {
+        detail: data
+      });
     })
     .catch(err => {
       return res.render('pages_event/index.ejs')

@@ -1,0 +1,54 @@
+<section class="content-header">
+    <h1>
+        Phần Quà: <b><%=detail.name%></b>
+        <small>HCMC-STUDENTS</small>
+    </h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <form id="reward_form" role="form" method="POST">
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Reward Info</h3>
+                    </div>
+                    <div class="box-body">
+                        <div id="name-group" class="form-group">
+                            <label>Tên</label>
+                            <input id="name" name="name" type="text" class="form-control"
+                                    placeholder="<%= detail.name %>"
+                                        value="<%= detail.name %>">
+                        </div>
+
+                        <div id="detail-group" class="form-group">
+                            <label>Mô tả</label>
+                            <textarea class="form-control" name="detail" id="detail" width="100%"><%= detail.detail %></textarea>
+                        </div>
+
+                        <div id="number-group" class="form-group">
+                            <label>Số lượng</label>
+                            <input id="number" name="number" type="number" class="form-control"
+                                    placeholder="<%= detail.number %>"
+                                    value="<%= detail.number %>">
+                        </div>
+
+                        <div id="number-redeem-group" class="form-group">
+                            <label>Số lượng đã chọn lấy quà</label>
+                            <input id="number_redeem" name="number_redeem" type="number" class="form-control"
+                                    placeholder="<%= detail.number_redeem %>"
+                                    value="<%= detail.number_redeem %>">
+                        </div>
+
+                        <div id="point-group" class="form-group">
+                            <label>Số điểm để đổi</label>
+                            <input id="point" name="point" type="number" class="form-control"
+                                    placeholder="<%= detail.point %>"
+                                    value="<%= detail.point %>">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

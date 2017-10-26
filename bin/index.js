@@ -9,10 +9,13 @@ var boot = function () {
   })
   // mongodb://heroku_ncdhz4rn:j51dpjdmpitu8v7onnt61uhi56@ds133281.mlab.com:33281/heroku_ncdhz4rn
   // mongodb://localhost:27017/demo_be
-  mongoose.connect('mongodb://heroku_ncdhz4rn:j51dpjdmpitu8v7onnt61uhi56@ds133281.mlab.com:33281/heroku_ncdhz4rn', function (err, result) {
-    if (err) return console.log(err)
-    console.log('Connect database successful')
-  })
+  mongoose.connect('mongodb://heroku_ncdhz4rn:j51dpjdmpitu8v7onnt61uhi56@ds133281.mlab.com:33281/heroku_ncdhz4rn', { useMongoClient: true })
+    .then(result => {
+      console.log("Connect database successful")
+    })
+    .catch(err => {
+      console.log(err);
+    })
 }
 
 var shutdown = function () {

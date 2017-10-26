@@ -1,0 +1,25 @@
+<% include ../partials/head %>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+
+		<% include ../partials/header %>
+
+		<% include ../partials/aside %>
+
+		<div class="content-wrapper">
+			<% include ../sources/index %>
+		</div>
+
+		<% include ../partials/footer %>
+
+
+		<div class="control-sidebar-bg"></div>
+	</div>
+<script>
+    $(".add_topic").click(function () {
+        $('#modal_news').modal('show');
+        return false;
+    });
+</script>
+<% include ../partials/tail %>

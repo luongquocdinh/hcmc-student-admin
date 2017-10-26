@@ -17,6 +17,7 @@ let feedback = require('./../routes/feedback')
 let comment = require('./../routes/comment')
 let reward = require('./../routes/reward')
 let notifications = require('./../routes/notifications')
+let sources = require('./../routes/sources')
 
 let path = require('path')
 
@@ -56,5 +57,6 @@ app.use('/', feedback)
 app.use('/', comment)
 app.use('/', reward)
 app.use('/', notifications)
+app.use('/', sources)
 
 module.exports = app

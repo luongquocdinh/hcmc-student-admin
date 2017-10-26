@@ -9,6 +9,7 @@ var router = express.Router()
 var User = require('./../models/user')
 var Login = require('./../models/login')
 var Event = require('./../models/event')
+var EventRegister = require('./../models/event_register');
 
 const ZONE = 25200000
 
@@ -163,4 +164,25 @@ router.post('/event/:id/update', (req, res) => {
             })
     })
 })
+
+router.get('/event/:id/register', (req, res) => {
+    let id = req.params.id;
+    EventRegister.find({event_id: id})
+        .then(data => {
+            Event.findOne({_id: id})
+                .then(event => {
+                    return res.render('pages_event/register.ejs', {
+                        datas: data,
+                        event: event
+                    });
+                })
+                .catch(err => {
+                    return res.render('pages_event/index.ejs')
+                })
+        })
+        .catch(err => {
+            return res.render('pages_event/index.ejs')
+        })
+})
+
 module.exports = router

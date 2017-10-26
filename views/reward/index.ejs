@@ -18,7 +18,7 @@
                 </span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text"><%= rewards[i].name %></span>
+                    <span class="info-box-text"><a href="/reward/<%=rewards[i]._id%>"><%= rewards[i].name %></a></span>
                     <span class="info-box-number">Số lượng: <%= rewards[i].number %></span>
                     <span class="progress-description">
                         <%=rewards[i].detail%>
