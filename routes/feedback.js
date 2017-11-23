@@ -10,12 +10,14 @@ var FeedBack = require('./../models/feedback')
 var sess;
 
 router.get('/feedback', function (req, res) {
+    sess = req.session
     FeedBack.find({}, function (err, feedback) {
         if (err) {
             return console.log(err)
         }
         return res.render('pages_feedback/news.ejs', {
-            news: feedback
+            news: feedback,
+            req: req
         })
     })
 })

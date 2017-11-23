@@ -9,7 +9,10 @@ let News = require('./../models/news')
 let Topic = require('./../models/topic')
 let Comment = require('./../models/comment')
 
+let sess;
+
 router.get('/comment', (req, res) => {
+    sess = req.session
     var response
     let prev
     let news_id = []
@@ -50,7 +53,8 @@ router.get('/comment', (req, res) => {
                 })
 
                 return res.render('pages_comment/comment.ejs', {
-                    datas: response
+                    datas: response,
+                    req: req
                 })
             })
 

@@ -70,54 +70,136 @@
 
 	<div class="row">
 		<div class="col-lg-12">
-			<div class="box box-info">
-				<div class="box-header">
-					<h3 class="box-title">Crawler Detail</h3>
-				</div>
+			<form id="parser_form" role="form" method="POST" action="{{ url($action) }}">
+				<div class="box box-info">
+					<div class="box-header">
+						<h3 class="box-title">Crawler Detail</h3>
+					</div>
 
-				<div class="box-body no-padding">
-					<div class="table-responsive">
-						<table class="table">
-							<tr>
-								<th>Title:</th>
-								<td>
-									<%= detail['crawler']['detail']['title'] %>
-								</td>
-							</tr>
-							<tr>
-								<th>Thumbnail:</th>
-								<td>
-									<%= detail['crawler']['detail']['thumbnail'] %>
-								</td>
-							</tr>
-							<tr>
-								<th>Brief:</th>
-								<td>
-									<%= detail['crawler']['detail']['brief'] %>
-								</td>
-							</tr>
-							<tr>
-								<th>Content:</th>
-								<td>
-									<%= detail['crawler']['detail']['content'] %>
-								</td>
-							</tr>
-							<tr>
-								<th>Author:</th>
-								<td>
-									<%= detail['crawler']['detail']['author'] %>
-								</td>
-							</tr>
-							<tr>
-								<th>Datetime:</th>
-								<td>
-									<%= detail['crawler']['detail']['datetime'] %>
-								</td>
-							</tr>
-						</table>
+					<div class="box-body">
+						<div class="form-group parserDetail">
+							<label>Title</label>
+							<input id="parser_title" name="title" type="text" class="form-control"
+								   placeholder="<%= detail['crawler']['detail']['title'] %>"
+								   value="<%= detail['crawler']['detail']['title'] %>">
+						</div>
+						<div class="form-group parserDetail">
+							<label>Date & Time</label>
+							<input id="parser_datetime" name="datetime" type="text" class="form-control"
+								   placeholder="<%= detail['crawler']['detail']['datetime'] %>"
+								   value="<%= detail['crawler']['detail']['datetime'] %>">
+						</div>
+						<div class="form-group parserDetail">
+							<label>Brief</label>
+							<input id="parser_brief" name="brief" type="text" class="form-control"
+								   placeholder="<%= detail['crawler']['detail']['brief'] %>"
+								   value="<%= detail['crawler']['detail']['brief'] %>">
+						</div>
+						<div class="form-group parserDetail">
+							<label>Content</label>
+							<input id="parser_content" name="content" type="text" class="form-control"
+								   placeholder="<%= detail['crawler']['detail']['content'] %>"
+								   value="<%= detail['crawler']['detail']['content'] %>">
+						</div>
+						<div class="form-group parserDetail">
+							<label>Thumbnail</label>
+							<input id="parser_thumbnail" name="thumbnail" type="text" class="form-control"
+								   placeholder="<%= detail['crawler']['detail']['thumbnail'] %>"
+								   value="<%= detail['crawler']['detail']['thumbnail'] %>">
+						</div>
+						<div class="form-group parserDetail">
+							<label>Author</label>
+							<input id="parser_author" name="author" type="text" class="form-control"
+								   placeholder="<%= detail['crawler']['detail']['author'] %>"
+								   value="<%= detail['crawler']['detail']['author'] %>">
+						</div>
+
+						<div class="form-group parserDetail">
+							<label>Test URL</label>
+							<div class="input-group">
+								<input id="test_url" name="url" type="text" class="form-control"
+									   placeholder="http://"
+									   value="http://">
+								<span class="input-group-btn">
+									<button id="test_parser" type="button" class="btn btn-primary">Test</button>
+									</span>
+							</div>
+						</div>
+
+						<div class="box-footer">
+                            <button type="submit" class="btn btn-primary pull-right">
+                                Submit
+                            </button>
+                            <button type="reset" class="btn pull-right margin-r-5">
+                                Reset
+                            </button>
+                        </div>
 					</div>
 				</div>
-			</div>
+			</form>
 		</div>
 	</div>
 </section>
+
+<div class="modal" id="myModal">
+	<div class="modal-dialog" style="width: 95%;height: 95%">
+		<div class="modal-content" style="height: auto;min-height: 100%;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Test Parser</h4>
+			</div>
+			<div class="modal-body" id="modalBody" style="height:auto;min-height: 100%">
+				<div class="nav-tabs-custom">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#tab_1" data-toggle="tab">Web</a></li>
+						<li><a href="#tab_2" data-toggle="tab">Crawled Data</a></li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="tab_1">
+
+						</div>
+						<!-- /.tab-pane -->
+						<div class="tab-pane" id="tab_2">
+							<table class="table table-striped">
+								<tr>
+									<th style="width:30%">Title</th>
+									<td id="crawled_title"></td>
+								</tr>
+								<tr>
+									<th>Date & Time</th>
+									<td id="crawled_datetime"></td>
+								</tr>
+								<tr>
+									<th>Brief</th>
+									<td id="crawled_brief"></td>
+								</tr>
+								<tr>
+									<th>Author</th>
+									<td id="crawled_author"></td>
+								</tr>
+								<tr>
+									<th>Detail</th>
+									<td>
+										<textarea id="crawled_detail"  rows="10" cols="80" class="form-control">
+											
+										</textarea>
+									</td>
+								</tr>
+								<tr>
+									<th>Thumbnail</th>
+									<td id="crawled_thumbnail"></td>
+								</tr>
+							</table>
+						</div>
+
+						<!-- /.tab-pane -->
+					</div>
+					<!-- /.tab-content -->
+				</div>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>

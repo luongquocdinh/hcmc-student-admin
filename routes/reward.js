@@ -12,6 +12,8 @@ var User = require('./../models/user')
 var Login = require('./../models/login')
 var Reward = require('./../models/reward')
 
+var sess;
+
 var cloudinary = require('cloudinary')
 cloudinary.config({
   cloud_name: 'hwjtqthls',
@@ -22,11 +24,13 @@ cloudinary.config({
 var sess;
 
 router.get('/reward', (req, res) => {
+  sess = req.session
   Reward.find({})
     .sort({ updated_at: -1 })
     .then(data => {
       return res.render('pages_reward/index.ejs', {
-        rewards: data
+        rewards: data,
+        req: req
       })
     })
     .catch(err => {
