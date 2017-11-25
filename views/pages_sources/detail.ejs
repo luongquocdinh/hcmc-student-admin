@@ -50,7 +50,7 @@
 		}
 		$("#modalBody #tab_1").html('<iframe src="' + $("#test_url").val() + '" style="min-height: 100%;width: 100%;height:70vh" width="100%" height="100%"/>');
 		$.ajax({
-			url: 'http://localhost:9090/crawler',
+			url: 'https://hcmc-student-api.herokuapp.com/crawler',
 			type: "POST",
 			crossDomain: true,
 			data: $("#parser_form").serializeArray(),
