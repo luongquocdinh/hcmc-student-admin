@@ -43,7 +43,8 @@ router.get('/reward/:id', (req, res) => {
   Reward.findOne({_id: id})
     .then(data => {
       return res.render('pages_reward/detail.ejs', {
-        detail: data
+        detail: data,
+        req: req
       });
     })
     .catch(err => {

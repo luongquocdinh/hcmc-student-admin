@@ -16,7 +16,9 @@ const icon = 'http://res.cloudinary.com/hwjtqthls/image/upload/v1508400422/icon_
 const TOPIC = "news";
 
 router.get('/notifications', (req, res) => {
-    return res.render('notifications/index.ejs');
+    return res.render('notifications/index.ejs', {
+        req: req
+    });
 })
 
 router.post('/notifications/push', (req, res) => {

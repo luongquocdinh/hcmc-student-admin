@@ -41,7 +41,7 @@ router.get('/comment', (req, res) => {
                 data.map(d => {
                     news[d._id] = d
                 })
-
+                
                 response = response.map(r => {
                     return {
                         id: r._id,
@@ -50,8 +50,9 @@ router.get('/comment', (req, res) => {
                         news_id: r.news_id,
                         title: news[r.news_id].title
                     }
+                    
                 })
-
+                
                 return res.render('pages_comment/comment.ejs', {
                     datas: response,
                     req: req

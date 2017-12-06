@@ -28,7 +28,8 @@ router.get('/feedback/:id', function (req, res) {
             return console.log(err)
         }
         return res.render('pages_feedback/news_detail.ejs', {
-            news: feedback
+            news: feedback,
+            req: req
         })
     })
 })

@@ -60,7 +60,6 @@ router.post('/login', function (req, res) {
                 sess.position = user.position
                 sess.topic = user.list_topic
                 sess.is_accept = user.is_accept
-                console.log(req.session)
                 return res.redirect('/list_user')
             })
         }
@@ -171,8 +170,6 @@ router.post('/change_password', function (req, res) {
     var old_password = crypto.createHash("sha256").update(req.body.old_password).digest('base64')
     var password = req.body.password
     var repeat = req.body.repeat
-    console.log(req.session)
-    console.log(res.locals)
     Login.findOne({token: token}, function (err, email) {
         if (err) {
             return res.redirect('/login')

@@ -9,12 +9,14 @@ var router = express.Router()
 var User = require('./../models/user')
 var Login = require('./../models/login')
 var Sources = require('./../models/sources')
-
+var sess;
 router.get('/sources', (req, res) => {
+    sess = req.session
     Sources.find({})
         .then(data => {
             res.render('pages_sources/index.ejs', {
-                'datas': data
+                'datas': data,
+                req: req
             });
         })
         .catch(err => {
@@ -27,7 +29,8 @@ router.get('/sources/:id', (req, res) => {
     Sources.findOne({_id: id})
         .then(data => {
             res.render('pages_sources/detail.ejs', {
-                'detail': data
+                'detail': data,
+                req: req
             });
         })
         .catch(err => {

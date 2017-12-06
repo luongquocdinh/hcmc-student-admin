@@ -79,7 +79,7 @@ router.get('/images/:id', (req, res) => {
         .then(data => {
             return res.render('pages_images/news_detail.ejs', {
                 news: data,
-                req, req
+                req: req
             })
         }).catch(err => {
             return res.render('pages_images/index.ejs')

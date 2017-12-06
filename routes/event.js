@@ -91,7 +91,8 @@ router.get('/event/:id', (req, res) => {
                 news: data,
                 start: start,
                 end: end,
-                deadline: deadline
+                deadline: deadline,
+                req: req
             })
         })
         .catch(err => {
@@ -173,7 +174,8 @@ router.get('/event/:id/register', (req, res) => {
                 .then(event => {
                     return res.render('pages_event/register.ejs', {
                         datas: data,
-                        event: event
+                        event: event,
+                        req: req
                     });
                 })
                 .catch(err => {

@@ -20,71 +20,77 @@
           </a>
         </li>
 
-        <li class="active treeview">
-          <a href="/news"> 
-            <i class="fa fa-bookmark"></i><span>Tin Tức</span>
-          </a>
-        </li>
+        <% if (req.session.position === 'manager' || req.session.position === 'member') { %>
+          <li class="active treeview">
+            <a href="/news"> 
+              <i class="fa fa-bookmark"></i><span>Tin Tức</span>
+            </a>
+          </li>
 
-        <li class="active treeview">
-          <a href="/activity"> 
-            <i class="fa fa-crop"></i><span>Hoạt Động</span>
-          </a>
-        </li>
+          <li class="active treeview">
+            <a href="/activity"> 
+              <i class="fa fa-crop"></i><span>Hoạt Động</span>
+            </a>
+          </li>
 
-        <li class="active treeview">
-          <a href="/gift"> 
-            <i class="fa fa-gift"></i><span>Quà Tặng</span>
-          </a>
-        </li>
+          <li class="active treeview">
+            <a href="/gift"> 
+              <i class="fa fa-gift"></i><span>Quà Tặng</span>
+            </a>
+          </li>
 
-        <li class="active treeview">
-          <a href="/event"> 
-            <i class="fa fa-star"></i><span>Sự Kiện</span>
-          </a>
-        </li>
+          <li class="active treeview">
+            <a href="/event"> 
+              <i class="fa fa-star"></i><span>Sự Kiện</span>
+            </a>
+          </li>
 
-        <li class="active treeview">
-          <a href="/location"> 
-            <i class="fa fa-location-arrow"></i><span>Địa Điểm</span>
-          </a>
-        </li>
+          <li class="active treeview">
+            <a href="/location"> 
+              <i class="fa fa-location-arrow"></i><span>Địa Điểm</span>
+            </a>
+          </li>
 
-        <li class="active treeview">
-          <a href="/images"> 
-            <i class="fa fa-image"></i><span>Hình Ảnh</span>
-          </a>
-        </li>
+          <li class="active treeview">
+            <a href="/images"> 
+              <i class="fa fa-image"></i><span>Hình Ảnh</span>
+            </a>
+          </li>
+        <% } %>
 
-        <li class="active treeview">
-          <a href="/comment"> 
-            <i class="fa fa-comments"></i><span>Bình Luận</span>
-          </a>
-        </li>
+        <% if (req.session.position === 'manager') { %>
+          <li class="active treeview">
+            <a href="/comment"> 
+              <i class="fa fa-comments"></i><span>Bình Luận</span>
+            </a>
+          </li>
 
-        <li class="active treeview">
-          <a href="/feedback"> 
-            <i class="fa fa-star"></i><span>Phản Hồi</span>
-          </a>
-        </li>
+          <li class="active treeview">
+            <a href="/feedback"> 
+              <i class="fa fa-star"></i><span>Phản Hồi</span>
+            </a>
+          </li>
 
-        <li class="active treeview">
-          <a href="/reward"> 
-            <i class="fa fa-gift"></i><span>Kho quà</span>
-          </a>
-        </li>
+          <li class="active treeview">
+            <a href="/reward"> 
+              <i class="fa fa-gift"></i><span>Kho quà</span>
+            </a>
+          </li>
 
-        <li class="active treeview">
-          <a href="/notifications"> 
-            <i class="fa fa-th"></i><span>Gửi thông báo</span>
-          </a>
-        </li>
+          <li class="active treeview">
+            <a href="/notifications"> 
+              <i class="fa fa-th"></i><span>Gửi thông báo</span>
+            </a>
+          </li>
+        <% } %>
 
-        <li class="active treeview">
-          <a href="/sources"> 
-            <i class="fa fa-th"></i><span>Quản lý của developer</span>
-          </a>
-        </li>
+        <% if (req.session.position === 'dev') { %>
+          <li class="active treeview">
+            <a href="/sources"> 
+              <i class="fa fa-th"></i><span>Quản lý của developer</span>
+            </a>
+          </li>
+        <% } %>
       </ul>
     </section>
     <!-- /.sidebar -->

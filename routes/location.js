@@ -59,7 +59,8 @@ router.get('/location/:topic_ascii', function (req, res) {
                 return res.render('pages_location/topic.ejs', {
                     news: data,
                     topic_ascii: topic_ascii,
-                    topic: topic.topic
+                    topic: topic.topic,
+                    req: req
                 })
             })
             .catch(err => {
@@ -125,7 +126,8 @@ router.get('/location/:topic_ascii/:id', function (req, res) {
     News.findOne({_id: id})
         .then(data => {
             return res.render('pages_location/news_detail.ejs', {
-                news: data
+                news: data,
+                req: req
             });
         }).catch(err => {
             return res.render('pages_location/index.ejs');
