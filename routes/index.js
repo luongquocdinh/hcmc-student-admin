@@ -60,6 +60,7 @@ router.post('/login', function (req, res) {
                 sess.position = user.position
                 sess.topic = user.list_topic
                 sess.is_accept = user.is_accept
+                sess.user_id = user._id
                 return res.redirect('/list_user')
             })
         }

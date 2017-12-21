@@ -8,9 +8,10 @@ var fs = require('fs')
 var moment = require('moment-timezone')
 var router = express.Router()
 
-var User = require('./../models/user')
+var Admin = require('./../models/admin')
 var Login = require('./../models/login')
 var Reward = require('./../models/reward')
+var Partner = require('./../models/partner')
 
 var sess;
 
@@ -28,10 +29,16 @@ router.get('/reward', (req, res) => {
   Reward.find({})
     .sort({ updated_at: -1 })
     .then(data => {
-      return res.render('pages_reward/index.ejs', {
-        rewards: data,
-        req: req
-      })
+      Admin.find({is_block: false, position: 'partner'})
+        .then(admin => {
+          let partner = admin;
+          console.log(partner)
+          return res.render('pages_reward/index.ejs', {
+            rewards: data,
+            partner: partner,
+            req: req
+          })
+        })
     })
     .catch(err => {
       return res.render('pages_event/index.ejs')
@@ -53,6 +60,7 @@ router.get('/reward/:id', (req, res) => {
 })
 
 router.post('/reward/add', upload.single('thumbnail'), (req, res) => {
+  sess = req.session
   let partner = []
   req.body.partner.map(r => {
     partner.push({
@@ -61,6 +69,9 @@ router.post('/reward/add', upload.single('thumbnail'), (req, res) => {
       number: r[2]
     })
   })
+
+
+
   cloudinary.uploader.upload(req.file.path, function (result) {
       let deadline = new Date(req.body.deadline)
       var data = Reward({
@@ -76,6 +87,15 @@ router.post('/reward/add', upload.single('thumbnail'), (req, res) => {
       data.save(function (err, news) {
         if (err) {
           return res.render('pages_reward/index.ejs')
+        }
+        for (let i = 0; i < partner.length; i++) {
+          let partner_info = Partner({
+            reward_id: news._id,
+            user_id: partner[i].user_id,
+            number: partner[i].number
+          })
+
+          partner_info.save();
         }
         return res.redirect('/reward')
       })

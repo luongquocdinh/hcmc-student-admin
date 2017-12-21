@@ -55,13 +55,13 @@
 			crossDomain: true,
 			data: $("#parser_form").serializeArray(),
 			success: function (res) {
-				console.log(res)
-				$("#crawled_title").html(JSON.stringify(res.title));
-				$("#crawled_author").html(JSON.stringify(res.author));
-				$("#crawled_datetime").html(res.datetime);
-				$("#crawled_brief").html(JSON.stringify(res.brief));
+				$("#crawled_title input").val(JSON.stringify(res.title));
+				$("#crawled_author input").val(JSON.stringify(res.author));
+				$("#crawled_datetime input").val(res.datetime);
+				$("#crawled_brief input").val(JSON.stringify(res.brief));
 				CKEDITOR.instances['crawled_detail'].setData(res.content)
-				$("#crawled_thumbnail").append(res.thumbnail + "<br>");
+				$("#crawled_thumbnail input").val(res.thumbnail);
+				$("#crawled_thumbnail").append('<img id="blah" src="' + res.thumbnail + '" height="100px;" width="100px;" />')
 			},
 			error: function (err) {
 				console.log("ERR", err);

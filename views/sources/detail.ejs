@@ -161,38 +161,42 @@
 						</div>
 						<!-- /.tab-pane -->
 						<div class="tab-pane" id="tab_2">
-							<table class="table table-striped">
-								<tr>
-									<th style="width:30%">Title</th>
-									<td id="crawled_title"></td>
-								</tr>
-								<tr>
-									<th>Date & Time</th>
-									<td id="crawled_datetime"></td>
-								</tr>
-								<tr>
-									<th>Brief</th>
-									<td id="crawled_brief"></td>
-								</tr>
-								<tr>
-									<th>Author</th>
-									<td id="crawled_author"></td>
-								</tr>
-								<tr>
-									<th>Detail</th>
-									<td>
-										<textarea id="crawled_detail"  rows="10" cols="80" class="form-control">
-											
-										</textarea>
-									</td>
-								</tr>
-								<tr>
-									<th>Thumbnail</th>
-									<td id="crawled_thumbnail"></td>
-								</tr>
-							</table>
-						</div>
+							<form method="POST" action="/sources/addData">
+								<input type="hidden" name="source_id" value="<%= detail._id %>" >
+								<div class="form-group" id="crawled_title">
+									<label>Tiêu đề</label>
+									<input type="text" name="crawled_title" class="form-control">
+								</div>
 
+								<div class="form-group" id="crawled_datetime">
+									<label>Thời gian đăng bài</label>
+									<input type="text" name="crawled_datetime" class="form-control">
+								</div>
+
+								<div class="form-group" id="crawled_brief">
+									<label>Đoạn mô tả ngắn</label>
+									<input type="text" name="crawled_brief" class="form-control">
+								</div>
+
+								<div class="form-group" id="crawled_thumbnail">
+									<label for="exampleInputFile">Hình Thumbnail</label>
+									<input type="text" class="form-control" name="crawled_thumbnail" />
+								</div>
+
+								<div class="form-group">
+									<label>Nội dung</label>
+									<textarea id="crawled_detail" name="crawled_detail"  rows="10" cols="80" class="form-control"></textarea>
+								</div>
+
+								<div class="form-group" id="crawled_author">
+									<label>Tác giả</label>
+									<input type="text" name="crawled_author" class="form-control" />
+								</div>
+								<div class="form-group">
+									<input type="submit" class="btn btn-primary" style="float: right;"  value="Lưu"/>
+								</div>
+							</form>
+						</div>
 						<!-- /.tab-pane -->
 					</div>
 					<!-- /.tab-content -->

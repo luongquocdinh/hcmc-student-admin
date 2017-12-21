@@ -42,7 +42,7 @@ app.set('view engine', 'ejs')
 app.use(flash());
 app.use(cookieParser())
 app.use(express.query())
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 app.use(bodyParser.json())
 app.use(express.static('public'))
 
