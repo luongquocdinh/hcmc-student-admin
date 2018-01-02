@@ -31,8 +31,9 @@ router.get('/sources/:id', (req, res) => {
     Sources.findOne({_id: id})
         .then(data => {
             res.render('pages_sources/detail.ejs', {
-                'detail': data,
-                req: req
+                detail: data,
+                req: req,
+                action: '/sources/'+ id +'/parser/update'
             });
         })
         .catch(err => {
@@ -101,6 +102,26 @@ router.post('/sources/parser/save', (req, res) => {
     data.save(() => {
         return res.redirect('/sources');
     })
+})
+
+router.post('/sources/:id/parser/update', (req, res) => {
+    let id = req.params.id;
+    let detail = {
+        title: req.body.title,
+        datetime: req.body.datetime,
+        brief: req.body.brief,
+        content: req.body.content,
+        thumbnail: req.body.thumbnail,
+        author: req.body.author
+    };
+    
+    Sources.findOne({_id: id})
+        .then(data => {
+            data.crawler.detail = detail
+            data.save(() => {
+                return res.redirect('/sources/' + id);
+            })
+        })
 })
 
 module.exports = router
