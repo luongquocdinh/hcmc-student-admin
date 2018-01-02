@@ -14,11 +14,13 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="active treeview">
-          <a href="/list_user"> 
-            <i class="fa fa-users"></i><span>Quản Lý Thành Viên</span>
-          </a>
-        </li>
+        <% if (req.session.position === 'manager' || req.session.position === 'member' || req.session.position === 'admin') { %>
+          <li class="active treeview">
+            <a href="/list_user"> 
+              <i class="fa fa-users"></i><span>Quản Lý Thành Viên</span>
+            </a>
+          </li>
+        <% } %>
 
         <% if (req.session.position === 'manager' || req.session.position === 'member') { %>
           <li class="active treeview">

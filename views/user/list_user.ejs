@@ -190,8 +190,8 @@
                                     <td>
                                         <% topic.forEach(function (data) { %>
                                             <% for (var i = 0; i < req.session.topic.length; i++) { %>
-                                                <% if (data.id_topic == req.session.topic[i]) { %>
-                                                    <span class="label label-success"><%=data.name_topic%></span>
+                                                <% if (data.id == req.session.topic[i]) { %>
+                                                    <span class="label label-success"><%=data.topic%></span>
                                                 <% } %>
                                             <% } %>
                                         <%})%>

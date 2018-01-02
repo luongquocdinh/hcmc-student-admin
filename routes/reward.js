@@ -12,6 +12,7 @@ var Admin = require('./../models/admin')
 var Login = require('./../models/login')
 var Reward = require('./../models/reward')
 var Partner = require('./../models/partner')
+var Redeem = require('./../models/redeem')
 
 var sess;
 
@@ -70,8 +71,6 @@ router.post('/reward/add', upload.single('thumbnail'), (req, res) => {
     })
   })
 
-
-
   cloudinary.uploader.upload(req.file.path, function (result) {
       let deadline = new Date(req.body.deadline)
       var data = Reward({
@@ -100,6 +99,27 @@ router.post('/reward/add', upload.single('thumbnail'), (req, res) => {
         return res.redirect('/reward')
       })
   })
+})
+
+router.get('/reward/:id/redeem', (req, res) => {
+  let id = req.params.id;
+  Redeem.find({reward_id: id})
+    .then(data => {
+      Reward.find({_id: id})
+        .then(reward => {
+          return res.render('pages_reward/redeem.ejs', {
+            datas: data,
+            reward: reward,
+            req: req
+          })
+        })
+        .catch(err => {
+            return res.render('pages_event/index.ejs')
+        })
+    })
+    .catch(err => {
+        return res.render('pages_event/index.ejs')
+    })
 })
 
 module.exports = router
