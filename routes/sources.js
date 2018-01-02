@@ -67,4 +67,40 @@ router.post('/sources/addData', (req, res) => {
     })
 })
 
+router.get('/sources/add/parser', (req, res) => {
+    return res.render('pages_sources/add.ejs', {
+        req: req,
+        action: '/sources/parser/save'
+    });
+})
+
+router.post('/sources/parser/save', (req, res) => {
+    let name = req.body.name;
+    let origin_url = req.body.origin_url;
+    let url = req.body.url;
+    let detail = {
+        title: req.body.title,
+        datetime: req.body.datetime,
+        brief: req.body.brief,
+        content: req.body.content,
+        thumbnail: req.body.thumbnail,
+        author: req.body.author
+    };
+    let link = req.body.link;
+
+    let data = Sources({
+        name: name,
+        origin_url: origin_url,
+        url: url,
+        crawler: {
+            link: link,
+            detail: detail
+        }
+    })
+
+    data.save(() => {
+        return res.redirect('/sources');
+    })
+})
+
 module.exports = router

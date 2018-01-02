@@ -1,0 +1,47 @@
+<% include ../partials/head %>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+
+		<% include ../partials/header %>
+
+		<% include ../partials/aside %>
+
+		<div class="content-wrapper">
+			<% include ../sources/add %>
+		</div>
+
+		<% include ../partials/footer %>
+
+
+		<div class="control-sidebar-bg"></div>
+    </div>
+    
+<% include ../partials/tail %>
+
+<script>
+	var totalName = 0;
+				$("#link").click(function (e) {
+					
+					var input = '<div class="input-group margin-bottom" id="field-link' + totalName + '">' +
+						'<input name="link[' + totalName + ']" type="text" class="form-control"' +
+						'placeholder="Link"' +
+						'value="" multiple=multiple>' +
+						'<span class="input-group-btn">' +
+						'<button class="btn btn-danger btn-flat remove-ignore" data-button="' + totalName + '" type="button">' +
+						'<i class="fa fa-minus"></i>' +
+						'</button>' +
+						'</span>' +
+						'</div>';
+
+					$("#link").before(input);
+					totalName++;
+					removeLink();
+				});
+				function removeLink() {
+					$(".remove-ignore").click(function (e) {
+						e.preventDefault();
+						$("#field-link" + $(this).attr('data-button')).remove();
+					});
+				}
+</script>
