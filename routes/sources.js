@@ -53,7 +53,7 @@ router.post('/sources/addData', (req, res) => {
     let data = News({
         title: title,
         brief: brief,
-        datetime: chrono.parseDate(datetime).getTime() || Date.now(),
+        datetime: chrono.parseDate(datetime).getTime() / 1000 || Date.now(),
         thumbnail: thumbnail,
         content: content,
         author: author,
