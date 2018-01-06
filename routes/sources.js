@@ -48,6 +48,7 @@ router.post('/sources/addData', (req, res) => {
     let thumbnail = req.body.crawled_thumbnail;
     let content = req.body.crawled_detail;
     let author = req.body.crawled_author;
+    let article = req.body.crawled_article;
 
     let data = News({
         title: title,
@@ -57,6 +58,8 @@ router.post('/sources/addData', (req, res) => {
         content: content,
         author: author,
         is_accept: true,
+
+        article: article,
         
         topic: "Tin Tức Tổng Hợp",
         topic_ascii: "tin-tuc-tong-hop",

@@ -16,6 +16,8 @@ var news = new Schema({
     datetime: {type: Number},
     views: {type: Number, default: 0},
 
+    article: {type: String, default: "HCMC STUDENT"},
+
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
 },

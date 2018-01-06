@@ -163,6 +163,9 @@
 						<div class="tab-pane" id="tab_2">
 							<form method="POST" action="/sources/addData">
 								<input type="hidden" name="source_id" value="<%= detail._id %>" >
+								<div class="form-group">
+									<input type="text" value="<%= detail.name %>" class="form-control" name="crawled_article" />
+								</div>
 								<div class="form-group" id="crawled_title">
 									<label>Tiêu đề</label>
 									<input type="text" name="crawled_title" class="form-control">
