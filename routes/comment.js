@@ -41,20 +41,22 @@ router.get('/comment', (req, res) => {
                 data.map(d => {
                     news[d._id] = d
                 })
-                
-                response = response.map(r => {
-                    return {
-                        id: r._id,
-                        user: r.name,
-                        content: r.content,
-                        news_id: r.news_id,
-                        title: news[r.news_id].title
+                let comments = [];
+                response.map(r => {
+                    if (news[r.news_id]) {
+                        let item = {
+                            id: r._id,
+                            user: r.name,
+                            content: r.content,
+                            news_id: r.news_id,
+                            title: news[r.news_id].title
+                        }
+                        comments.push(item);
                     }
-                    
                 })
                 
                 return res.render('pages_comment/comment.ejs', {
-                    datas: response,
+                    datas: comments,
                     req: req
                 })
             })
